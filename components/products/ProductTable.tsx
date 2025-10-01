@@ -52,7 +52,7 @@ export default function ProductTable({ products, loading, onDelete, currentUserI
     {
       title: 'Actions',
       key: 'actions',
-      render: (text: any, record: Product) => (
+      render: (text: string, record: Product) => (
         <Space>
           <Tooltip title="Modifier">
             <Link href={`/products/${record.id}/edit`}>

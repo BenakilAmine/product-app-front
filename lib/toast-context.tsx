@@ -11,7 +11,7 @@ export type ToastType = 'success' | 'error' | 'warning' | 'info';
 export interface ToastOptions {
   duration?: number;
   position?: string;
-  icon?: any;
+  icon?: React.ReactNode;
   action?: {
     label: string;
     onClick: () => void;
@@ -50,7 +50,7 @@ const CustomToast = ({
 }: { 
   message: string; 
   type: ToastType; 
-  icon?: any; 
+  icon?: React.ReactNode; 
   action?: { label: string; onClick: () => void; };
 }) => {
   const getIcon = () => {
@@ -116,7 +116,7 @@ const CustomToast = ({
 };
 
 // Provider du contexte (simplifié)
-export const ToastProvider = ({ children }: { children: any }) => {
+export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const showToast = (message: string, type: ToastType = 'info', options: ToastOptions = {}) => {
     const { duration = 4000, position = 'top-right', icon, action } = options;
     

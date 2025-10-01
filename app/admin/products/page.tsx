@@ -1,27 +1,14 @@
 'use client';
 import { 
   Card, 
-  Button, 
-  Typography, 
   Modal, 
   Form, 
   message, 
-  Popconfirm,
-  Row,
-  Col,
   Spin
 } from 'antd';
 import { 
-  ShopOutlined, 
-  EditOutlined, 
-  DeleteOutlined, 
   PlusOutlined,
-  EyeOutlined,
-  ReloadOutlined,
-  FilterOutlined,
-  DollarOutlined,
-  CalendarOutlined,
-  UserOutlined
+  ReloadOutlined
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../lib/auth-context';
@@ -36,23 +23,24 @@ import ProductEditModal from '../../../components/products/ProductEditModal';
 import ProductsMetrics from '../../../components/admin/products/ProductsMetrics';
 import AdminProductsTable from '../../../components/admin/products/AdminProductsTable';
 import { useAdminProducts } from '../../../hooks/useAdminProducts';
+import { ProductItem, ProductFilters } from '../../../types/admin';
 
-const { Text } = Typography;
+// const { Text } = Typography; // Supprimé car non utilisé
 
 export default function AdminProducts() {
   const { user, loading, isAuthenticated } = useAuth();
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  // const [currentPage, setCurrentPage] = useState(1); // Supprimé car non utilisé
+  // const [pageSize, setPageSize] = useState(10); // Supprimé car non utilisé
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [redirecting, setRedirecting] = useState(false);
-  const [filters, setFilters] = useState<Record<string, any>>({});
+  const [filters, setFilters] = useState<ProductFilters>({});
   const [error, setError] = useState<string | null>(null);
 
   // Nouvel état pour la modale d'édition
   const [editModalVisible, setEditModalVisible] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [editingProduct, setEditingProduct] = useState<ProductItem | null>(null);
   const [editForm] = Form.useForm();
 
   // Nouvel état pour la modale de création
@@ -93,36 +81,37 @@ export default function AdminProducts() {
     if (metricsError) setError(metricsError.message);
   }, [productsError, metricsError]);
 
-  const handleFilterChange = (newFilters: Record<string, any>) => {
+  const handleFilterChange = (newFilters: ProductFilters) => {
     setFilters(newFilters);
-    setCurrentPage(1);
+    // setCurrentPage(1); // Supprimé car currentPage n'est plus utilisé
   };
 
   const handleClearFilters = () => {
     setFilters({});
-    setCurrentPage(1);
+    // setCurrentPage(1); // Supprimé car currentPage n'est plus utilisé
   };
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await deleteProduct({ variables: { id: productId } } as any);
+      await deleteProduct({ variables: { id: productId } });
       message.success('Produit supprimé avec succès');
       refetchProducts();
       // Recharger les métriques car le nombre total de produits a changé
       refetchMetrics();
       setDeleteModalVisible(false);
-    } catch (error: any) {
-      message.error(error.message || 'Erreur lors de la suppression');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erreur lors de la suppression';
+      message.error(errorMessage);
     }
   };
 
-  const confirmDelete = (product: any) => {
+  const confirmDelete = (product: ProductItem) => {
     setSelectedProduct(product);
     setDeleteModalVisible(true);
   };
 
   // Ouvrir la modale d'édition
-  const openEditModal = (product: any) => {
+  const openEditModal = (product: ProductItem) => {
     setEditingProduct(product);
     editForm.setFieldsValue({
       name: product.name,
@@ -138,7 +127,7 @@ export default function AdminProducts() {
   };
 
   // Filtrage avancé
-  const filteredProducts = (products || []).filter((product: any) => {
+  const filteredProducts = (products || []).filter((product: ProductItem) => {
     if (!product) return false;
     if (filters.search && !product.name.toLowerCase().includes(filters.search.toLowerCase())) return false;
     if (filters.priceRange) {
@@ -155,7 +144,7 @@ export default function AdminProducts() {
     return true;
   });
 
-  const totalValue = products.reduce((sum: number, product: any) => sum + product.price, 0);
+  const totalValue = products.reduce((sum: number, product: ProductItem) => sum + product.price, 0);
   const averagePrice = products.length > 0 ? totalValue / products.length : 0;
 
   // États d'erreur
@@ -165,7 +154,7 @@ export default function AdminProducts() {
         <div style={{ padding: 24, maxWidth: 1400, margin: '0 auto' }}>
           <ErrorState
             title="Erreur de chargement"
-            description={error || (productsError as any)?.message || (metricsError as any)?.message || 'Impossible de charger les données'}
+            description={error || productsError?.message || metricsError?.message || 'Impossible de charger les données'}
             actions={[
               { label: 'Réessayer', onClick: () => { setError(null); refetchAll(); }, type: 'primary' },
               { label: 'Retour au dashboard', onClick: () => router.push('/admin'), type: 'default' }
@@ -214,8 +203,8 @@ export default function AdminProducts() {
               { value: '100+', label: '100€+' }
             ] },
             { key: 'owner', label: 'Propriétaire', type: 'select', options: (products || [])
-              .filter((p: any) => p && p.user && p.user.email)
-              .map((p: any) => ({ value: p.user.email, label: p.user.email })) },
+              .filter((p: ProductItem) => p && p.user && p.user.email)
+              .map((p: ProductItem) => ({ value: p.user.email, label: p.user.email })) },
             { key: 'createdDate', label: 'Date de création', type: 'date' },
           ]}
           onFilterChange={handleFilterChange}
@@ -266,13 +255,13 @@ export default function AdminProducts() {
         <Modal
           title="Confirmer la suppression"
           open={deleteModalVisible}
-          onOk={() => handleDeleteProduct(selectedProduct?.id.toString())}
+          onOk={() => selectedProduct?.id && handleDeleteProduct(selectedProduct.id.toString())}
           onCancel={() => setDeleteModalVisible(false)}
           okText="Supprimer"
           cancelText="Annuler"
           okButtonProps={{ danger: true }}
         >
-          <p>Êtes-vous sûr de vouloir supprimer le produit <strong>"{selectedProduct?.name}"</strong> ?</p>
+          <p>Êtes-vous sûr de vouloir supprimer le produit <strong>&quot;{selectedProduct?.name}&quot;</strong> ?</p>
           <p>Cette action est irréversible.</p>
         </Modal>
       </div>

@@ -18,7 +18,7 @@ interface FilterOption {
 
 interface FilterPanelProps {
   filters: FilterOption[];
-  onFilterChange: (filters: Record<string, any>) => void;
+  onFilterChange: (filters: Record<string, string | number>) => void;
   onClear: () => void;
   loading?: boolean;
   className?: string;
@@ -34,7 +34,7 @@ export default function FilterPanel({
   const [form] = Form.useForm();
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleFilterChange = (changedValues: any, allValues: any) => {
+  const handleFilterChange = (changedValues: Record<string, unknown>, allValues: Record<string, unknown>) => {
     onFilterChange(allValues);
   };
 

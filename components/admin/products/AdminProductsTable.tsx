@@ -4,15 +4,16 @@ import React from 'react';
 import { Table, Space, Avatar, Tag, Tooltip, Typography } from 'antd';
 import { ShopOutlined, UserOutlined, CalendarOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { formatters } from '../../../shared';
+import { ProductItem } from '../../../types/admin';
 
 const { Text } = Typography;
 
 export interface AdminProductsTableProps {
-  products: any[];
+  products: ProductItem[];
   loading: boolean;
   onView: (productId: string) => void;
-  onEdit: (product: any) => void;
-  onDeleteConfirm: (product: any) => void;
+  onEdit: (product: ProductItem) => void;
+  onDeleteConfirm: (product: ProductItem) => void;
 }
 
 export default function AdminProductsTable({ products, loading, onView, onEdit, onDeleteConfirm }: AdminProductsTableProps) {
@@ -26,7 +27,7 @@ export default function AdminProductsTable({ products, loading, onView, onEdit, 
     {
       title: 'Produit',
       key: 'product',
-      render: (record: any) => (
+      render: (record: ProductItem) => (
         <Space>
           <Avatar icon={<ShopOutlined />} style={{ background: getPriceColor(record.price) }} />
           <div>
@@ -45,12 +46,12 @@ export default function AdminProductsTable({ products, loading, onView, onEdit, 
           {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price)}
         </Tag>
       ),
-      sorter: (a: any, b: any) => a.price - b.price,
+      sorter: (a: ProductItem, b: ProductItem) => a.price - b.price,
     },
     {
       title: 'Propriétaire',
       key: 'owner',
-      render: (record: any) => (
+      render: (record: ProductItem) => (
         <Space>
           <Avatar icon={<UserOutlined />} size="small" style={{ background: '#1890ff' }} />
           <div>
@@ -70,7 +71,7 @@ export default function AdminProductsTable({ products, loading, onView, onEdit, 
           <Text>{formatters.dateShort(date)}</Text>
         </Space>
       ),
-      sorter: (a: any, b: any) => {
+      sorter: (a: ProductItem, b: ProductItem) => {
         const dateA = formatters._parseDate(a.createdAt);
         const dateB = formatters._parseDate(b.createdAt);
         if (!dateA || !dateB) return 0;
@@ -91,7 +92,7 @@ export default function AdminProductsTable({ products, loading, onView, onEdit, 
     {
       title: 'Actions',
       key: 'actions',
-      render: (record: any) => (
+      render: (record: ProductItem) => (
         <Space>
           <Tooltip title="Voir le produit">
             <EyeOutlined onClick={() => onView(record.id)} style={{ color: '#1890ff' }} />
@@ -109,7 +110,7 @@ export default function AdminProductsTable({ products, loading, onView, onEdit, 
 
   return (
     <Table
-      columns={columns as any}
+      columns={columns}
       dataSource={products}
       loading={loading}
       rowKey="id"

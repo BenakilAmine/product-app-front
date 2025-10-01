@@ -7,7 +7,7 @@ import { UserOutlined, LockOutlined, LoginOutlined, ArrowLeftOutlined, ShoppingO
 import Link from 'next/link';
 import { useAuth } from '../../lib/auth-context';
 import AmazonLayout from '../../components/AmazonLayout';
-import { FormLayout, LoadingState, colors, messages } from '../../shared';
+import { LoadingState } from '../../shared';
 
 const { Title, Text } = Typography;
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
                   <div>
                     <ShoppingOutlined style={{ 
                       fontSize: '80px', 
-                      color: colors.amazon.orange,
+                      color: '#ff9900',
                       marginBottom: '16px'
                     }} />
                     <Title level={1} style={{ 
@@ -98,7 +98,7 @@ export default function LoginPage() {
                         <div style={{ 
                           width: '8px', 
                           height: '8px', 
-                          background: colors.success[500], 
+                          background: '#52c41a', 
                           borderRadius: '50%' 
                         }} />
                         <Text style={{ color: '#131921', fontSize: '16px' }}>
@@ -109,7 +109,7 @@ export default function LoginPage() {
                         <div style={{ 
                           width: '8px', 
                           height: '8px', 
-                          background: colors.success[500], 
+                          background: '#52c41a', 
                           borderRadius: '50%' 
                         }} />
                         <Text style={{ color: '#131921', fontSize: '16px' }}>
@@ -120,7 +120,7 @@ export default function LoginPage() {
                         <div style={{ 
                           width: '8px', 
                           height: '8px', 
-                          background: colors.success[500], 
+                          background: '#52c41a', 
                           borderRadius: '50%' 
                         }} />
                         <Text style={{ color: '#131921', fontSize: '16px' }}>

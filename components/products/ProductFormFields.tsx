@@ -5,7 +5,7 @@ import { Form, Input, InputNumber, Button, Space, Row, Col, Divider } from 'antd
 import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { productValidationRules } from '../../utils/productValidation';
-import { CreateProductInput, ProductFormFieldsProps } from '../../types';
+import { ProductFormFieldsProps } from '../../types';
 import { priceInputConfig } from '../../shared/utils/priceUtils';
 
 export default function ProductFormFields({ form, onFinish, loading, isEdit, hideActions = false }: ProductFormFieldsProps) {

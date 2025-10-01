@@ -83,7 +83,7 @@ export default function AdminSidebar({ collapsed, pathname, onMenuClick }: Admin
         <Menu
           mode="inline"
           selectedKeys={[pathname]}
-          items={menuItems as any}
+          items={menuItems}
           onClick={onMenuClick}
           style={{
             background: 'transparent',

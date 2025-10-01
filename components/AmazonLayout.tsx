@@ -94,7 +94,7 @@ export default function AmazonLayout({
                     </Link>
                     <Link href="/signup">
                       <Button type="primary" style={{ background: '#ff9900', borderColor: '#ff9900' }}>
-                        S'inscrire
+                        S&apos;inscrire
                       </Button>
                     </Link>
                   </>
@@ -167,7 +167,7 @@ export default function AmazonLayout({
               <Space direction="vertical" size={12}>
                 <Typography.Title level={5} style={{ color: 'white' }}>Aide</Typography.Title>
                 <Space direction="vertical" size={4}>
-                  <Typography.Title level={5} style={{ color: '#ccc' }}>Centre d'aide</Typography.Title>
+                  <Typography.Title level={5} style={{ color: '#ccc' }}>Centre d&apos;aide</Typography.Title>
                   <Typography.Title level={5} style={{ color: '#ccc' }}>Nous contacter</Typography.Title>
                   <Typography.Title level={5} style={{ color: '#ccc' }}>FAQ</Typography.Title>
                 </Space>
@@ -189,7 +189,7 @@ export default function AmazonLayout({
                 <Space direction="vertical" size={8}>
                   <Input placeholder="Votre email" style={{ background: 'white' }} />
                   <Button type="primary" style={{ background: '#ff9900', borderColor: '#ff9900' }}>
-                    S'abonner
+                    S&apos;abonner
                   </Button>
                 </Space>
               </Space>

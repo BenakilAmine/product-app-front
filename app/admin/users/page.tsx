@@ -1,9 +1,9 @@
 'use client';
-import { Card, Spin } from 'antd';
+import { Card } from 'antd';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../lib/auth-context';
-import { useEffect, useState } from 'react';
+// import { useAuth } from '../../../lib/auth-context'; // Supprimé car non utilisé
+// import { useEffect, useState } from 'react'; // Supprimé car non utilisé
 import AdminLayout from '../../../components/AdminLayout';
 import PageHeader from '../../../components/admin/PageHeader';
 import UsersMetrics from '../../../components/admin/users/UsersMetrics';
@@ -17,7 +17,7 @@ import { LoadingSpinner, glassCardStyle, adminPageContainerStyle } from '../../.
 
 export default function AdminUsers() {
   const router = useRouter();
-  const { redirecting, loading, isAuthenticated, user } = useAdminRedirect();
+  const { redirecting, loading } = useAdminRedirect();
   
   const {
     users,
@@ -25,9 +25,9 @@ export default function AdminUsers() {
     totalUsers,
     usersLoading,
     metricsLoading,
-    currentPage,
-    pageSize,
-    searchText,
+    // currentPage, // Supprimé car non utilisé
+    // pageSize, // Supprimé car non utilisé
+    // searchText, // Supprimé car non utilisé
     editModalVisible,
     selectedUser,
     handleSearch,
@@ -36,7 +36,7 @@ export default function AdminUsers() {
     handleDeleteUser,
     handlePageChange,
     handleCloseModal,
-    refetchUsers,
+    // refetchUsers, // Supprimé car non utilisé
     refetchAll
   } = useAdminUsers();
 
@@ -74,7 +74,7 @@ export default function AdminUsers() {
           totalUsers={metrics?.totalUsers}
           adminsCount={metrics?.adminsCount}
           activeUsers={users.length}
-          currentPage={currentPage}
+          currentPage={1}
         />
 
         {/* Table des utilisateurs */}
@@ -82,8 +82,8 @@ export default function AdminUsers() {
           <AdminUsersTable
             users={users}
             loading={usersLoading}
-            currentPage={currentPage}
-            pageSize={pageSize}
+            currentPage={1}
+            pageSize={10}
             total={totalUsers}
             onSearch={handleSearch}
             onEditUser={handleEditUser}

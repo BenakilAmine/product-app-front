@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { Form, Button, Card, Typography, Space, Divider } from 'antd';
 import { ArrowLeftOutlined, ShoppingOutlined } from '@ant-design/icons';
-import Link from 'next/link';
+// // import Link from 'next/link'; // Supprimé car non utilisé // Supprimé car non utilisé
 import ProductFormFields from './products/ProductFormFields';
 import { useProductMutations } from '../hooks/useProductMutations';
 import { ProductFormProps } from '../types';

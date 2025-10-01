@@ -175,8 +175,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return true;
       }
       return false;
-    } catch (error: any) {
-      notifyError(error.message || 'Erreur lors de la connexion');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erreur lors de la connexion';
+      notifyError(errorMessage);
       return false;
     }
   };
@@ -208,8 +209,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return true;
       }
       return false;
-    } catch (error: any) {
-      notifyError(error.message || 'Erreur lors de l\'inscription');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erreur lors de l\'inscription';
+      notifyError(errorMessage);
       return false;
     }
   };

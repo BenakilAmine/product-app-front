@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Form, Input, Button, Card, Typography, Space, Divider, Row, Col } from 'antd';
-import { UserOutlined, LockOutlined, UserAddOutlined, ArrowLeftOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, UserAddOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useAuth } from '../../lib/auth-context';
 import AmazonLayout from '../../components/AmazonLayout';
-import { FormLayout, LoadingState, colors, messages } from '../../shared';
+import { LoadingState } from '../../shared';
 
 const { Title, Text } = Typography;
 
@@ -75,7 +75,7 @@ export default function SignupPage() {
                       display: 'block',
                       marginTop: '16px'
                     }}>
-                      Commencez votre aventure avec nous dès aujourd'hui
+                      Commencez votre aventure avec nous dès aujourd&apos;hui
                     </Text>
                   </div>
                   

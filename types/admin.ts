@@ -104,3 +104,36 @@ export interface UsersMetricsResponse {
     adminsCount: number;
   };
 }
+
+// Types pour les produits admin
+export interface ProductItem {
+  id: string;
+  name: string;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+  };
+}
+
+export interface ProductsResponse {
+  products: ProductItem[];
+}
+
+export interface ProductFilters {
+  search?: string;
+  priceRange?: string;
+  owner?: string;
+  createdDate?: string;
+}
+
+export interface AdminProductsTableProps {
+  products: ProductItem[];
+  loading: boolean;
+  onView: (id: string) => void;
+  onEdit: (product: ProductItem) => void;
+  onDeleteConfirm: (product: ProductItem) => void;
+}

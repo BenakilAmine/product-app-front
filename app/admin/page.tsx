@@ -1,5 +1,5 @@
 'use client';
-import { Alert, Button } from 'antd';
+// import { Alert, Button } from 'antd'; // Supprimé car non utilisé
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../lib/auth-context';
 import { useEffect, useState } from 'react';
@@ -71,9 +71,9 @@ export default function AdminDashboard() {
           ] as PageAction[]}
         />
 
-        <MetricsCards metrics={metrics as any} />
+        <MetricsCards metrics={metrics} />
 
-        <QuickActions metrics={metrics as any} />
+        <QuickActions metrics={metrics} />
       </div>
     </AdminLayout>
   );

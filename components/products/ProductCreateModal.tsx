@@ -36,14 +36,15 @@ export default function ProductCreateModal({ open, onClose, onCreated }: Product
       onClose();
       form.resetFields();
       onCreated?.();
-    } catch (e: any) {
-      notifyApiError(e.message);
+    } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : 'Erreur lors de la création';
+      notifyApiError(errorMessage);
     }
   };
 
   return (
     <Modal title="Nouveau produit" open={open} onCancel={onClose} footer={null} destroyOnClose>
-      <ProductFormFields form={form as any} onFinish={handleFinish as any} isEdit={false} loading={loading} hideActions />
+      <ProductFormFields form={form} onFinish={handleFinish} isEdit={false} loading={loading} hideActions />
       <div style={{ textAlign: 'right', marginTop: 8 }}>
         <Button onClick={onClose} disabled={loading}>Annuler</Button>
         <Button type="primary" loading={loading} onClick={() => form.submit()} style={{ marginLeft: 8 }}>
