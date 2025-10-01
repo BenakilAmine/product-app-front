@@ -14,10 +14,11 @@ import {
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../lib/auth-context';
 import { AdminDesktopHeaderProps, MenuItem, UserMenuItem } from '../../types';
+import type { MenuProps } from 'antd';
 
 const { Title } = Typography;
 
-export default function AdminDesktopHeader({ pathname, onMenuClick }: AdminDesktopHeaderProps) {
+export default function AdminDesktopHeader({ pathname }: AdminDesktopHeaderProps) {
   const { user, logout } = useAuth();
   const router = useRouter();
 
@@ -39,7 +40,7 @@ export default function AdminDesktopHeader({ pathname, onMenuClick }: AdminDeskt
     },
   ];
 
-  const userMenuItems: UserMenuItem[] = [
+  const userMenuItems: MenuProps['items'] = [
     {
       key: 'profile',
       icon: <UserOutlined />,
@@ -118,7 +119,7 @@ export default function AdminDesktopHeader({ pathname, onMenuClick }: AdminDeskt
         </Button>
         <Dropdown
           menu={{ 
-            items: userMenuItems as any, 
+            items: userMenuItems, 
             onClick: handleUserMenuClick 
           }}
           placement="bottomRight"
