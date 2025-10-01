@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Row, Col, Button, Typography, Empty, Skeleton, Pagination } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
-import { Product, ProductGridPageProps } from '../../types';
+import { Product } from '../../types';
 import { formatters, colors, EmptyState } from '../../shared';
 
 const { Text } = Typography;
@@ -55,7 +55,7 @@ export default function ProductGrid({
   return (
     <>
       <Row gutter={[16, 16]}>
-        {products.map((p) => (
+        {products.map((p: any) => (
           <Col xs={24} sm={12} md={8} lg={6} key={p.id}>
             <Card 
               hoverable 

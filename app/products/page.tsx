@@ -6,7 +6,7 @@ import AmazonLayout from '../../components/AmazonLayout';
 import ProductFilters from '../../components/products/ProductFilters';
 import ProductGrid from '../../components/products/ProductGrid';
 import { useProductFilters } from '../../hooks/useProductFilters';
-import { ProductGridPageProps } from '../../types';
+// import { ProductGridPageProps } from '../../types'; // Supprimé car non utilisé
 import { LoadingState } from '../../shared';
 
 export default function ProductsPage() {

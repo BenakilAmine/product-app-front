@@ -3,12 +3,12 @@ import { gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { 
   Product, 
-  ProductFormProps, 
+  // ProductFormProps, // Supprimé car non utilisé 
   CreateProductInput, 
   UpdateProductInput,
-  GetProductResponse,
-  CreateProductResponse,
-  UpdateProductResponse
+  // GetProductResponse, // Supprimé car non utilisé
+  // CreateProductResponse, // Supprimé car non utilisé
+  // UpdateProductResponse // Supprimé car non utilisé
 } from '../types';
 import { useApiWithToast } from '../shared/hooks/useApiWithToast';
 import { useToastNotifications } from './useToastNotifications';
@@ -66,29 +66,29 @@ export function useProductMutations({ productId, mode }: ProductFormProps) {
   } = useToastNotifications();
 
   // Mutations
-  const { execute: createProduct, loading: createLoading } = useMutationApi<CreateProductResponse>(CREATE_PRODUCT, {
-    onSuccess: (data) => {
+  const { execute: createProduct, loading: createLoading } = useMutationApi(CREATE_PRODUCT, {
+    onSuccess: (data: any) => {
       notifyProductCreated(data?.createProduct?.name);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       notifyApiError('Erreur lors de la création du produit');
     }
   });
   
-  const { execute: updateProduct, loading: updateLoading } = useMutationApi<UpdateProductResponse>(UPDATE_PRODUCT, {
-    onSuccess: (data) => {
+  const { execute: updateProduct, loading: updateLoading } = useMutationApi(UPDATE_PRODUCT, {
+    onSuccess: (data: any) => {
       notifyProductUpdated(data?.updateProduct?.name);
     },
-    onError: (error) => {
+    onError: (error: any) => {
       notifyApiError('Erreur lors de la modification du produit');
     }
   });
 
   // Query pour récupérer le produit en mode édition
-  const { data: productData, loading: productLoading } = useQueryApi<GetProductResponse>(GET_PRODUCT, {
+  const { data: productData, loading: productLoading } = useQueryApi(GET_PRODUCT, {
     variables: { id: productId },
     skip: mode === 'create' || !productId,
-    onError: (error) => {
+    onError: (error: any) => {
       notifyApiError('Erreur lors du chargement du produit');
     }
   });

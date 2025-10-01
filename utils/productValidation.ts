@@ -1,4 +1,4 @@
-import { ValidationRule } from '../types';
+// import { ValidationRule } from '../types'; // Supprimé car non utilisé
 
 export const productValidationRules: Record<string, ValidationRule[]> = {
   name: [

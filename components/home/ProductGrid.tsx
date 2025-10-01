@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button, Typography, Space, Card, Row, Col, Skeleton } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
-import { ProductGridProps } from '../../types';
+// import { ProductGridProps } from '../../types'; // Supprimé car non utilisé
 import { formatters, colors } from '../../shared';
 
 const { Title, Text } = Typography;
 
-export default function ProductGrid({ products, loading }: ProductGridProps) {
+export default function ProductGrid({ products, loading }: { products: any[]; loading: boolean }) {
   const router = useRouter();
 
   return (
@@ -24,7 +24,7 @@ export default function ProductGrid({ products, loading }: ProductGridProps) {
         </Space>
 
         <Row gutter={[16, 16]}>
-          {products.map((p, idx) => (
+          {products.map((p: any, idx: number) => (
             <Col xs={24} sm={12} md={8} lg={6} key={p ? p.id : idx}>
               <Card 
                 hoverable 

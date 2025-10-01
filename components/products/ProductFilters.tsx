@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, Row, Col, Input, Typography, Slider, Select, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { ProductFiltersProps } from '../../types';
+import type { ProductFilters } from '../../types';
 
 const { Text } = Typography;
 
@@ -15,7 +15,7 @@ export default function ProductFilters({
   sort,
   onSortChange,
   maxPrice
-}: ProductFiltersProps) {
+}: ProductFilters) {
   return (
     <div style={{ padding: '16px', display: 'flex', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: 1200 }}>

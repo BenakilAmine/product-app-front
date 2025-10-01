@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
-import { Product, GetProductsResponse, ProductSort } from '../types';
+import { Product } from '../types';
 import { useApiWithToast } from '../shared/hooks/useApiWithToast';
 
 const GET_PRODUCTS = gql`

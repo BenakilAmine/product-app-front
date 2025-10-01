@@ -12,6 +12,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../lib/auth-context';
 import { AdminSidebarProps, MenuItem } from '../../types';
+import type { MenuProps } from 'antd';
 import { getRoleColor, getRoleIcon, getRoleBackgroundColor } from '../../utils/roleUtils';
 
 const { Title, Text } = Typography;
@@ -20,7 +21,7 @@ export default function AdminSidebar({ collapsed, pathname, onMenuClick }: Admin
   const { user } = useAuth();
   const router = useRouter();
 
-  const menuItems: MenuItem[] = [
+  const menuItems: MenuProps['items'] = [
     {
       key: '/admin',
       icon: <DashboardOutlined />,

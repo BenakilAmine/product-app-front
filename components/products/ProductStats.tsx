@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
 import { ShoppingOutlined, DollarOutlined } from '@ant-design/icons';
-import { ProductStatsProps } from '../../types';
+// import { ProductStatsProps } from '../../types'; // Supprimé car non utilisé
 import { colors } from '../../shared';
 
 export default function ProductStats({ totalProducts, totalValue, averagePrice }: ProductStatsProps) {

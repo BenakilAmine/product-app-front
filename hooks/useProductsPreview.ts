@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
-import { GetProductsResponse, UseProductsPreviewReturn } from '../types';
+// import { GetProductsResponse } from '../types'; // Supprimé car non utilisé
 import { useApiWithToast } from '../shared/hooks/useApiWithToast';
 
 const GET_PRODUCTS_PREVIEW = gql`
@@ -13,9 +13,9 @@ const GET_PRODUCTS_PREVIEW = gql`
   }
 `;
 
-export function useProductsPreview(): UseProductsPreviewReturn {
+export function useProductsPreview() {
   const { useQueryApi } = useApiWithToast();
-  const { data, loading } = useQueryApi<GetProductsResponse>(GET_PRODUCTS_PREVIEW, {
+  const { data, loading } = useQueryApi(GET_PRODUCTS_PREVIEW, {
     fetchPolicy: 'cache-first',
     showErrorMessage: true,
     errorMessage: 'Erreur lors du chargement des produits'

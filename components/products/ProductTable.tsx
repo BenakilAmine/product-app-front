@@ -4,7 +4,7 @@ import React from 'react';
 import { Table, Button, Space, Popconfirm, Tag, Tooltip, Typography } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { Product, ProductTableProps } from '../../types';
+import { Product } from '../../types';
 import { formatters } from '../../shared';
 
 const { Text } = Typography;

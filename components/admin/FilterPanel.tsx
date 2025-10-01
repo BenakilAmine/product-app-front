@@ -35,7 +35,7 @@ export default function FilterPanel({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleFilterChange = (changedValues: Record<string, unknown>, allValues: Record<string, unknown>) => {
-    onFilterChange(allValues);
+    onFilterChange(allValues as Record<string, string | number>);
   };
 
   const handleClear = () => {

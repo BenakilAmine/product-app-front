@@ -6,12 +6,12 @@ import { ArrowLeftOutlined, ShoppingOutlined } from '@ant-design/icons';
 // // import Link from 'next/link'; // Supprimé car non utilisé // Supprimé car non utilisé
 import ProductFormFields from './products/ProductFormFields';
 import { useProductMutations } from '../hooks/useProductMutations';
-import { ProductFormProps } from '../types';
+// import { ProductFormProps } from '../types'; // Supprimé car non utilisé
 import { FormLayout } from '../shared';
 
 const { Title, Text } = Typography;
 
-export default function ProductForm({ productId, mode }: ProductFormProps) {
+export default function ProductForm({ productId, mode }: { productId?: string; mode: 'create' | 'edit' }) {
   const [form] = Form.useForm();
   const { handleSubmit, loading, productData, isEdit } = useProductMutations({ productId, mode });
 

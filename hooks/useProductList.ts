@@ -4,9 +4,9 @@ import { gql } from '@apollo/client';
 import { message } from 'antd';
 import { 
   Product, 
-  GetProductsResponse, 
-  DeleteProductResponse,
-  ProductStats 
+  // GetProductsResponse, // Supprimé car non utilisé 
+  // DeleteProductResponse, // Supprimé car non utilisé
+  // ProductStats // Supprimé car non utilisé 
 } from '../types';
 import { useApiWithToast } from '../shared/hooks/useApiWithToast';
 
@@ -39,12 +39,12 @@ export function useProductList() {
   const { useQueryApi, useMutationApi } = useApiWithToast();
 
   // Query pour récupérer les produits
-  const { data, loading, error, refetch } = useQueryApi<GetProductsResponse>(GET_PRODUCTS, {
+  const { data, loading, error, refetch } = useQueryApi(GET_PRODUCTS, {
     showErrorMessage: true,
     errorMessage: 'Erreur lors du chargement des produits'
   });
   
-  const { execute: deleteProduct } = useMutationApi<DeleteProductResponse>(DELETE_PRODUCT, {
+  const { execute: deleteProduct } = useMutationApi(DELETE_PRODUCT, {
     successMessage: 'Produit supprimé avec succès',
     errorMessage: 'Erreur lors de la suppression'
   });
