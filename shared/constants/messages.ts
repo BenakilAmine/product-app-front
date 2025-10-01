@@ -1,0 +1,221 @@
+// Messages et textes centralisés
+
+export const messages = {
+  // Messages généraux
+  common: {
+    loading: 'Chargement...',
+    saving: 'Sauvegarde...',
+    deleting: 'Suppression...',
+    success: 'Opération réussie',
+    error: 'Une erreur est survenue',
+    warning: 'Attention',
+    info: 'Information',
+    confirm: 'Confirmer',
+    cancel: 'Annuler',
+    save: 'Enregistrer',
+    edit: 'Modifier',
+    delete: 'Supprimer',
+    add: 'Ajouter',
+    create: 'Créer',
+    update: 'Mettre à jour',
+    refresh: 'Actualiser',
+    search: 'Rechercher',
+    filter: 'Filtrer',
+    clear: 'Effacer',
+    reset: 'Réinitialiser',
+    back: 'Retour',
+    next: 'Suivant',
+    previous: 'Précédent',
+    close: 'Fermer',
+    open: 'Ouvrir',
+    view: 'Voir',
+    undo: 'Annuler',
+  },
+
+  // Messages de succès
+  success: {
+    created: 'Créé avec succès',
+    updated: 'Mis à jour avec succès',
+    deleted: 'Supprimé avec succès',
+    saved: 'Sauvegardé avec succès',
+    loggedIn: 'Connexion réussie',
+    loggedOut: 'Déconnexion réussie',
+    registered: 'Inscription réussie',
+    passwordChanged: 'Mot de passe modifié avec succès',
+    profileUpdated: 'Profil mis à jour avec succès',
+  },
+
+  // Messages d'erreur
+  error: {
+    generic: 'Une erreur inattendue est survenue',
+    network: 'Erreur de connexion réseau',
+    server: 'Erreur du serveur',
+    unauthorized: 'Accès non autorisé',
+    forbidden: 'Accès interdit',
+    notFound: 'Ressource non trouvée',
+    validation: 'Erreur de validation',
+    required: 'Ce champ est obligatoire',
+    invalidEmail: 'Adresse email invalide',
+    invalidPassword: 'Mot de passe invalide',
+    passwordMismatch: 'Les mots de passe ne correspondent pas',
+    weakPassword: 'Mot de passe trop faible',
+    userExists: 'Cet utilisateur existe déjà',
+    userNotFound: 'Utilisateur non trouvé',
+    loginFailed: 'Échec de la connexion',
+    registrationFailed: 'Échec de l\'inscription',
+    saveFailed: 'Échec de la sauvegarde',
+    deleteFailed: 'Échec de la suppression',
+    networkError: 'Erreur de connexion. Vérifiez votre connexion internet.',
+    timeout: 'Délai d\'attente dépassé',
+    serverError: 'Erreur du serveur. Veuillez réessayer plus tard.',
+  },
+
+  // Messages de validation
+  validation: {
+    required: 'Ce champ est obligatoire',
+    email: 'Veuillez saisir une adresse email valide',
+    phone: 'Veuillez saisir un numéro de téléphone valide',
+    minLength: (min: number) => `Minimum ${min} caractères requis`,
+    maxLength: (max: number) => `Maximum ${max} caractères autorisés`,
+    min: (min: number) => `Valeur minimale : ${min}`,
+    max: (max: number) => `Valeur maximale : ${max}`,
+    range: (min: number, max: number) => `Valeur entre ${min} et ${max}`,
+    pattern: 'Format invalide',
+    unique: 'Cette valeur existe déjà',
+    confirm: 'Les valeurs ne correspondent pas',
+    date: 'Date invalide',
+
+    positive: 'Veuillez saisir un nombre positif',
+    integer: 'Veuillez saisir un nombre entier',
+    decimal: 'Veuillez saisir un nombre décimal',
+  },
+
+  // Messages de confirmation
+  confirm: {
+    delete: 'Êtes-vous sûr de vouloir supprimer cet élément ?',
+    deleteMultiple: 'Êtes-vous sûr de vouloir supprimer ces éléments ?',
+    logout: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+    reset: 'Êtes-vous sûr de vouloir réinitialiser ?',
+    discard: 'Voulez-vous abandonner les modifications non sauvegardées ?',
+    clear: 'Voulez-vous effacer tous les éléments ?',
+    save: 'Voulez-vous sauvegarder les modifications ?',
+    cancel: 'Voulez-vous annuler cette opération ?',
+    proceed: 'Voulez-vous continuer ?',
+  },
+
+  // Messages d'état vide
+  empty: {
+    noData: 'Aucune donnée disponible',
+    noResults: 'Aucun résultat trouvé',
+    noItems: 'Aucun élément',
+    noProducts: 'Aucun produit',
+    noUsers: 'Aucun utilisateur',
+    noMessages: 'Aucun message',
+    noNotifications: 'Aucune notification',
+    noSearchResults: 'Aucun résultat pour votre recherche',
+    noFilterResults: 'Aucun résultat ne correspond à vos filtres',
+  },
+
+  // Messages de chargement
+  loading: {
+    data: 'Chargement des données...',
+    products: 'Chargement des produits...',
+    users: 'Chargement des utilisateurs...',
+    search: 'Recherche en cours...',
+    save: 'Sauvegarde en cours...',
+    delete: 'Suppression en cours...',
+    processing: 'Traitement en cours...',
+    connecting: 'Connexion en cours...',
+  },
+
+  // Messages d'information
+  info: {
+    copyright: 'Tous droits réservés',
+    privacy: 'Politique de confidentialité',
+    terms: 'Conditions d\'utilisation',
+    help: 'Aide',
+    support: 'Support',
+    contact: 'Contact',
+    about: 'À propos',
+  },
+
+  // Messages de navigation
+  navigation: {
+    home: 'Accueil',
+    dashboard: 'Tableau de bord',
+    profile: 'Profil',
+    settings: 'Paramètres',
+    account: 'Compte',
+    logout: 'Déconnexion',
+    login: 'Connexion',
+    register: 'Inscription',
+    forgotPassword: 'Mot de passe oublié',
+    resetPassword: 'Réinitialiser le mot de passe',
+    changePassword: 'Changer le mot de passe',
+    backToHome: 'Retour à l\'accueil',
+    backToTop: 'Retour en haut',
+    nextPage: 'Page suivante',
+    previousPage: 'Page précédente',
+    firstPage: 'Première page',
+    lastPage: 'Dernière page',
+  },
+
+  // Messages de formulaire
+  form: {
+    required: 'Champs obligatoires',
+    optional: 'Champs optionnels',
+    allFields: 'Tous les champs',
+    fillAll: 'Veuillez remplir tous les champs obligatoires',
+    validEmail: 'Veuillez saisir une adresse email valide',
+    strongPassword: 'Le mot de passe doit contenir au moins 8 caractères avec des lettres, des chiffres et des symboles',
+    passwordMatch: 'Les mots de passe doivent correspondre',
+    submit: 'Soumettre',
+    reset: 'Réinitialiser',
+  },
+
+  // Messages de tableaux
+  table: {
+    noData: 'Aucune donnée',
+    loading: 'Chargement...',
+    error: 'Erreur de chargement',
+    refresh: 'Actualiser',
+    sort: 'Trier',
+    filter: 'Filtrer',
+    search: 'Rechercher',
+    actions: 'Actions',
+    view: 'Voir',
+    edit: 'Modifier',
+    delete: 'Supprimer',
+  },
+
+  // Messages de pagination
+  pagination: {
+    showing: 'Affichage de',
+    to: 'à',
+    of: 'sur',
+    results: 'résultats',
+    perPage: 'par page',
+    goToPage: 'Aller à la page',
+    page: 'Page',
+    first: 'Première',
+    last: 'Dernière',
+    next: 'Suivante',
+    previous: 'Précédente',
+  },
+
+  // Messages de recherche
+  search: {
+    placeholder: 'Rechercher...',
+    noResults: 'Aucun résultat trouvé',
+    results: 'résultats trouvés',
+    clear: 'Effacer la recherche',
+    filters: 'Filtres',
+    sortBy: 'Trier par',
+    relevance: 'Pertinence',
+    date: 'Date',
+    name: 'Nom',
+    price: 'Prix',
+    rating: 'Note',
+    popularity: 'Popularité',
+  },
+};
