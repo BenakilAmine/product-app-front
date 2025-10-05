@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button, Typography, Space, Card, Row, Col, Skeleton } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import { Product } from '../../types';
@@ -10,7 +11,7 @@ import { formatters, colors } from '../../shared';
 
 const { Title, Text } = Typography;
 
-export default function ProductGrid({ products }: { products: Product[]; loading: boolean }) {
+export default function ProductGrid({ products, loading }: { products: Product[]; loading: boolean }) {
   const router = useRouter();
 
   return (
@@ -24,11 +25,23 @@ export default function ProductGrid({ products }: { products: Product[]; loading
         </Space>
 
         <Row gutter={[16, 16]}>
-          {products.map((p: Product, idx: number) => (
-            <Col xs={24} sm={12} md={8} lg={6} key={p ? p.id : idx}>
+          {loading ? (
+            Array.from({ length: 8 }).map((_, idx) => (
+              <Col xs={24} sm={12} md={8} lg={6} key={idx}>
+                <Card style={{ borderRadius: 12 }}>
+                  <Skeleton.Image active style={{ width: '100%', height: 260 }} />
+                  <div style={{ padding: 16 }}>
+                    <Skeleton active paragraph={{ rows: 3 }} />
+                  </div>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            products.map((p: Product) => (
+            <Col xs={24} sm={12} md={8} lg={6} key={p.id}>
               <Card 
                 hoverable 
-                onClick={() => p && router.push(`/products/${p.id}`)}
+                onClick={() => router.push(`/products/${p.id}`)}
                 style={{ 
                   borderRadius: 12,
                   border: '1px solid #e7e7e7',
@@ -39,26 +52,23 @@ export default function ProductGrid({ products }: { products: Product[]; loading
                 }}
                 styles={{ body: { padding: 0 } }}
                 cover={
-                  !p ? (
-                    <Skeleton.Image active style={{ width: '100%', height: 260 }} />
-                  ) : (
-                    <div style={{ position: 'relative', height: 260, overflow: 'hidden' }}>
-                      <img
-                        src={`https://picsum.photos/seed/p-${p.id}/600/400`}
-                        alt={p.name}
-                        style={{ 
-                          width: '100%', 
-                          height: '100%', 
-                          objectFit: 'cover',
-                          transition: 'transform 0.3s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'scale(1.05)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'scale(1)';
-                        }}
-                      />
+                  <div style={{ position: 'relative', height: 260, overflow: 'hidden' }}>
+                    <Image
+                      src={`https://picsum.photos/seed/p-${p.id}/600/400`}
+                      alt={p.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      style={{ 
+                        objectFit: 'cover',
+                        transition: 'transform 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }}
+                    />
                       <div style={{
                         position: 'absolute',
                         top: 8,
@@ -73,18 +83,12 @@ export default function ProductGrid({ products }: { products: Product[]; loading
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}>
-                        <HeartOutlined style={{ color: '#ff4d4f', fontSize: 16 }} />
-                      </div>
+                      <HeartOutlined style={{ color: '#ff4d4f', fontSize: 16 }} />
                     </div>
-                  )
+                  </div>
                 }
               >
-                {!p ? (
-                  <div style={{ padding: 16 }}>
-                    <Skeleton active paragraph={{ rows: 2 }} />
-                  </div>
-                ) : (
-                  <div style={{ padding: 16 }}>
+                <div style={{ padding: 16 }}>
                     <Space direction="vertical" size={12} style={{ width: '100%' }}>
                       <div>
                         <Text strong style={{ 
@@ -154,11 +158,11 @@ export default function ProductGrid({ products }: { products: Product[]; loading
                         Ajouter au panier
                       </Button>
                     </Space>
-                  </div>
-                )}
+                </div>
               </Card>
             </Col>
-          ))}
+            ))
+          )}
         </Row>
       </div>
     </div>

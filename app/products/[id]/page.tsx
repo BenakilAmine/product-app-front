@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
 import { ProductPageResponse } from '../../../types/product';
@@ -155,15 +156,18 @@ export default function ProductDetailPage() {
               }}
               styles={{ body: { padding: 0 } }}
             >
-              <div style={{ position: 'relative' }}>
-                <img
+              <div style={{ position: 'relative', width: '100%', height: 'auto', minHeight: 400 }}>
+                <Image
                   src={imageUrl}
                   alt={product.name}
+                  width={800}
+                  height={600}
                   style={{ 
                     width: '100%', 
                     height: 'auto',
                     display: 'block'
                   }}
+                  priority
                 />
                 <div style={{
                   position: 'absolute',

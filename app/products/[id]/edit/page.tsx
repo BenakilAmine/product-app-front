@@ -25,11 +25,11 @@ const GET_PRODUCT = gql`
 export default function EditProductPage() {
   const params = useParams();
   const router = useRouter();
-  const { isAuthenticated, loading: authLoading, user } = useAuth();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const productId = params.id as string;
 
   // Query pour récupérer le produit
-  const { data, loading: productLoading, error } = useQuery(GET_PRODUCT, {
+  const { loading: productLoading } = useQuery(GET_PRODUCT, {
     variables: { id: productId },
     skip: !productId || !isAuthenticated,
   });

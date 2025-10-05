@@ -1,48 +1,26 @@
 'use client';
 
 import React from 'react';
-import { Button, Space, Card, Typography, Input, Empty } from 'antd';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-// // import Link from 'next/link'; // Supprimé car non utilisé // Supprimé car non utilisé
+import { Space, Card, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useAuth } from '../lib/contexts/auth-context';
 import ProductStats from './products/ProductStats';
 import ProductTable from './products/ProductTable';
 import { useProductList } from '../hooks/useProductList';
-import { LoadingState, EmptyState, SearchBar, ActionButtons } from '../shared';
+import { SearchBar, ActionButtons } from '../shared';
 
 const { Title } = Typography;
-const { Search } = Input;
 
 export default function ProductList() {
   const { user } = useAuth();
   const { 
     products, 
     loading, 
-    error, 
-    refetch, 
     searchText, 
     setSearchText, 
     handleDelete, 
     stats 
   } = useProductList();
-
-  if (error) {
-    return (
-      <EmptyState
-        type="error"
-        title="Erreur de chargement"
-        description="Impossible de charger les produits"
-        actions={[
-          {
-            label: 'Réessayer',
-            onClick: () => refetch(),
-            type: 'primary'
-          }
-        ]}
-        showCard
-      />
-    );
-  }
 
   return (
     <div style={{ padding: '24px' }}>

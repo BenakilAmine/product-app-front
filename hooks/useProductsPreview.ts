@@ -26,13 +26,8 @@ export function useProductsPreview(limit: number = 12) {
     loadPreview();
   }, [limit]);
 
-  // Afficher des placeholders pendant le chargement
-  const previewList = loading
-    ? Array.from({ length: 8 }).map(() => null)
-    : products;
-
   return {
-    products: previewList,
+    products,
     loading
   };
 }

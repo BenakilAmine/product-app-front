@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Card, Row, Col, Button, Typography, Skeleton, Pagination } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import { ProductPreview, ProductGridPageProps } from '../../types';
@@ -71,12 +72,12 @@ export default function ProductGrid({
               styles={{ body: { padding: 0 } }}
               cover={
                 <div style={{ position: 'relative', height: 260, overflow: 'hidden' }}>
-                  <img
+                  <Image
                     src={`https://picsum.photos/seed/p-${p.id}/600/400`}
                     alt={p.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     style={{ 
-                      width: '100%', 
-                      height: '100%', 
                       objectFit: 'cover',
                       transition: 'transform 0.3s ease'
                     }}
