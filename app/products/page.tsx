@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useAuth } from '../../lib/auth-context';
-import AmazonLayout from '../../components/AmazonLayout';
+import AmazonLayout from '../../components/MarketLayout';
 import ProductFilters from '../../components/products/ProductFilters';
 import ProductGrid from '../../components/products/ProductGrid';
 import { useProductFilters } from '../../hooks/useProductFilters';

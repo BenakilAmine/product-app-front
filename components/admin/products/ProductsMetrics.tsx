@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Row, Col } from 'antd';
-import KpiCard from '../../admin/KpiCard';
+import { Card, Row, Col, Statistic } from 'antd';
 import { ShopOutlined, CalendarOutlined, DollarOutlined, FilterOutlined } from '@ant-design/icons';
 
 export interface ProductsMetricsProps {
@@ -16,19 +15,52 @@ export default function ProductsMetrics({ totalProducts, productsLast7d, totalVa
   const formatPrice = (price: number) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 
   return (
-    <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
-      <Col xs={24} sm={12} lg={6}>
-        <KpiCard icon={<ShopOutlined />} label="Total Produits" value={totalProducts} />
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
-        <KpiCard icon={<CalendarOutlined />} label="Nouveaux (7j)" value={productsLast7d} />
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
-        <KpiCard icon={<DollarOutlined />} label="Valeur Totale" value={formatPrice(totalValue)} />
-      </Col>
-      <Col xs={24} sm={12} lg={6}>
-        <KpiCard icon={<FilterOutlined />} label="Prix Moyen" value={formatPrice(averagePrice)} />
-      </Col>
-    </Row>
+    <Card
+      style={{
+        borderRadius: 16,
+        border: '1px solid #e5e7eb',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+        background: '#ffffff',
+        marginBottom: 24
+      }}
+      bodyStyle={{ padding: '24px' }}
+    >
+      <Row gutter={[16, 16]}>
+        <Col xs={24} sm={12} lg={6}>
+          <Statistic
+            title="Total Produits"
+            value={totalProducts}
+            prefix={<ShopOutlined style={{ color: '#f97316' }} />}
+            valueStyle={{ color: '#111827', fontSize: 18, fontWeight: 600 }}
+          />
+        </Col>
+        <Col xs={24} sm={12} lg={6}>
+          <Statistic
+            title="Nouveaux (7j)"
+            value={productsLast7d}
+            prefix={<CalendarOutlined style={{ color: '#10b981' }} />}
+            valueStyle={{ color: '#111827', fontSize: 18, fontWeight: 600 }}
+          />
+        </Col>
+        <Col xs={24} sm={12} lg={6}>
+          <Statistic
+            title="Valeur Totale"
+            value={totalValue}
+            prefix={<DollarOutlined style={{ color: '#10b981' }} />}
+            formatter={(value) => formatPrice(Number(value))}
+            valueStyle={{ color: '#111827', fontSize: 18, fontWeight: 600 }}
+          />
+        </Col>
+        <Col xs={24} sm={12} lg={6}>
+          <Statistic
+            title="Prix Moyen"
+            value={averagePrice}
+            prefix={<FilterOutlined style={{ color: '#6b7280' }} />}
+            formatter={(value) => formatPrice(Number(value))}
+            valueStyle={{ color: '#111827', fontSize: 18, fontWeight: 600 }}
+          />
+        </Col>
+      </Row>
+    </Card>
   );
 }

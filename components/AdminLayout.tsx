@@ -2,9 +2,13 @@
 import { Layout } from 'antd';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import AdminSidebar from './admin/AdminSidebar';
-import AdminHeader from './admin/AdminHeader';
-import AdminDesktopHeader from './admin/AdminDesktopHeader';
+// import AdminSidebar from './admin/AdminSidebar';
+// import ModernAdminSidebar from './admin/ModernAdminSidebar';
+import Sidebar from './admin/Sidebar';
+// import AdminHeader from './admin/AdminHeader';
+// import ModernAdminHeader from './admin/ModernAdminHeader';
+import Header from './admin/Header';
+// import AdminDesktopHeader from './admin/AdminDesktopHeader';
 import MobileDrawer from './admin/MobileDrawer';
 import { AdminLayoutProps } from '../types';
 
@@ -40,14 +44,14 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   if (isMobile) {
     return (
-      <Layout style={{ minHeight: '100vh' }}>
-          <AdminHeader
+      <Layout style={{ minHeight: '100vh', background: '#f9fafb' }}>
+          <Header
             pathname={pathname}
             onMenuClick={handleMenuClick}
             onMobileMenuClick={handleMobileMenuClick}
           />
 
-        <Content style={{ padding: 0 }}>
+        <Content style={{ padding: 0, background: '#f9fafb' }}>
           {children}
         </Content>
 
@@ -55,7 +59,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           visible={mobileDrawerVisible}
           onClose={() => setMobileDrawerVisible(false)}
         >
-          <AdminSidebar
+          <Sidebar
             collapsed={false}
             pathname={pathname}
             onMenuClick={handleMenuClick}
@@ -66,7 +70,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+    <Layout style={{ minHeight: '100vh', background: '#f9fafb' }}>
       <Sider
         collapsible
         collapsed={collapsed}
@@ -74,8 +78,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         width={280}
         collapsedWidth={80}
         style={{
-          background: '#ffffff',
-          borderRight: '1px solid #f0f0f0',
+          background: 'transparent',
+          borderRight: 'none',
           position: 'fixed',
           left: 0,
           top: 0,
@@ -85,20 +89,21 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           overflow: 'auto'
         }}
       >
-        <AdminSidebar
+        <Sidebar
           collapsed={collapsed}
           pathname={pathname}
           onMenuClick={handleMenuClick}
         />
       </Sider>
 
-      <Layout style={{ marginLeft: collapsed ? 80 : 280, transition: 'margin-left 0.2s' }}>
-          <AdminDesktopHeader
+      <Layout style={{ marginLeft: collapsed ? 80 : 280, transition: 'margin-left 0.3s ease' }}>
+          <Header
             pathname={pathname}
             onMenuClick={handleMenuClick}
+            onMobileMenuClick={handleMobileMenuClick}
           />
 
-        <Content style={{ padding: 0 }}>
+        <Content style={{ padding: 0, background: '#f9fafb' }}>
           {children}
         </Content>
       </Layout>

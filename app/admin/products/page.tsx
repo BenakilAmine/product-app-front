@@ -8,7 +8,8 @@ import {
 } from 'antd';
 import { 
   PlusOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  ExportOutlined
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../lib/auth-context';
@@ -172,12 +173,32 @@ export default function AdminProducts() {
   return (
     <AdminLayout>
       <div style={{ padding: 24, maxWidth: 1400, margin: '0 auto', minHeight: '100vh' }}>
+        {/* Header de la page */}
         <PageHeader
-          title="🛍️ Gestion des Produits"
+          title="Gestion des Produits"
           subtitle="Administration et supervision du catalogue produits"
+          emoji="🛍️"
           actions={[
-            { key: 'refresh', label: 'Actualiser', icon: <ReloadOutlined />, onClick: () => refetchProducts(), type: 'default', loading: productsLoading },
-            { key: 'new', label: 'Nouveau Produit', icon: <PlusOutlined />, onClick: () => setCreateModalVisible(true), type: 'primary' },
+            {
+              key: 'refresh',
+              label: 'Actualiser',
+              icon: <ReloadOutlined />,
+              onClick: () => refetchProducts(),
+              loading: productsLoading
+            },
+            {
+              key: 'export',
+              label: 'Exporter',
+              icon: <ExportOutlined />,
+              onClick: () => console.log('Export products')
+            },
+            {
+              key: 'new',
+              label: 'Nouveau Produit',
+              icon: <PlusOutlined />,
+              onClick: () => setCreateModalVisible(true),
+              type: 'primary'
+            }
           ]}
         />
 

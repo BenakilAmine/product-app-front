@@ -1,69 +1,72 @@
 'use client';
 
-import { Button, Space, Typography } from 'antd';
 import React from 'react';
+import { Typography, Button, Space } from 'antd';
 
 const { Title, Text } = Typography;
 
-interface PageHeaderAction {
+export interface PageHeaderAction {
   key: string;
-  label: React.ReactNode;
+  label: string;
   icon?: React.ReactNode;
-  onClick?: () => void;
-  type?: 'default' | 'primary' | 'dashed' | 'link' | 'text';
+  onClick: () => void;
+  type?: 'primary' | 'default' | 'dashed' | 'link' | 'text';
   loading?: boolean;
+  disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
-interface PageHeaderProps {
+export interface PageHeaderProps {
   title: string;
-  subtitle?: string;
+  subtitle: string;
+  emoji?: string;
   actions?: PageHeaderAction[];
 }
 
-export default function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
+export default function PageHeader({ title, subtitle, emoji, actions = [] }: PageHeaderProps) {
   return (
-    <header
-      role="banner"
-      aria-labelledby="page-title"
-      style={{
-        background: '#ffffff',
-        padding: 24,
-        borderRadius: 12,
-        marginBottom: 24,
-        border: '1px solid #f0f0f0',
-      }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-        <div>
-          <Title level={2} id="page-title" style={{ margin: 0, color: '#1f1f1f' }}>
-            {title}
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'flex-start', 
+        marginBottom: 16,
+        flexWrap: 'wrap',
+        gap: 16
+      }}>
+        <div style={{ flex: 1, minWidth: 300 }}>
+          <Title level={2} style={{ margin: 0, color: '#111827', fontSize: 28, fontWeight: 700 }}>
+            {emoji && `${emoji} `}{title}
           </Title>
-          {subtitle && (
-            <Text type="secondary" style={{ fontSize: 14, color: '#666666' }}>
-              {subtitle}
-            </Text>
-          )}
+          <Text style={{ color: '#6b7280', fontSize: 16 }}>
+            {subtitle}
+          </Text>
         </div>
-        {actions && actions.length > 0 && (
-          <nav role="toolbar" aria-label="Actions de la page">
-            <Space wrap>
-              {actions.map((action) => (
-                <Button
-                  key={action.key}
-                  type={action.type}
-                  icon={action.icon}
-                  onClick={action.onClick}
-                  loading={action.loading}
-                  aria-label={typeof action.label === 'string' ? action.label : undefined}
-                >
-                  {action.label}
-                </Button>
-              ))}
-            </Space>
-          </nav>
+        {actions.length > 0 && (
+          <Space wrap>
+            {actions.map((action) => (
+              <Button
+                key={action.key}
+                icon={action.icon}
+                onClick={action.onClick}
+                type={action.type || 'default'}
+                loading={action.loading}
+                disabled={action.disabled}
+                style={{
+                  borderRadius: 8,
+                  ...(action.type === 'primary' && {
+                    background: '#f97316',
+                    borderColor: '#f97316'
+                  }),
+                  ...action.style
+                }}
+              >
+                {action.label}
+              </Button>
+            ))}
+          </Space>
         )}
       </div>
-    </header>
+    </div>
   );
 }
-

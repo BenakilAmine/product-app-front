@@ -6,7 +6,7 @@ import { Form, Input, Button, Card, Typography, Space, Divider, Row, Col } from 
 import { UserOutlined, LockOutlined, LoginOutlined, ArrowLeftOutlined, ShoppingOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { useAuth } from '../../lib/auth-context';
-import AmazonLayout from '../../components/AmazonLayout';
+import AmazonLayout from '../../components/MarketLayout';
 import { LoadingState } from '../../shared';
 
 const { Title, Text } = Typography;

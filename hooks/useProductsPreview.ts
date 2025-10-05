@@ -16,12 +16,14 @@ const GET_PRODUCTS_PREVIEW = gql`
 export function useProductsPreview() {
   const { useQueryApi } = useApiWithToast();
   const { data, loading } = useQueryApi(GET_PRODUCTS_PREVIEW, {
-    fetchPolicy: 'cache-first',
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'no-cache',
+    notifyOnNetworkStatusChange: true,
     showErrorMessage: true,
     errorMessage: 'Erreur lors du chargement des produits'
   });
 
-  const preview = (data?.products || []).slice(0, 12);
+  const preview = (((data as any)?.products) || []).slice(0, 12);
   const previewList = loading
     ? Array.from({ length: 8 }).map(() => null)
     : preview;

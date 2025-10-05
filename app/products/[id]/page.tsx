@@ -34,7 +34,7 @@ import {
   DollarOutlined
 } from '@ant-design/icons';
 import { useAuth } from '../../../lib/auth-context';
-import AmazonLayout from '../../../components/AmazonLayout';
+import AmazonLayout from '../../../components/MarketLayout';
 
 const { Title, Text } = Typography;
 
