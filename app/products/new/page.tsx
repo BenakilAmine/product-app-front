@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Spin } from 'antd';
-import { useAuth } from '../../../lib/auth-context';
+import { useAuth } from '../lib/contexts/auth-context';
 import ProductForm from '../../../components/ProductForm';
 
 export default function NewProductPage() {

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import { ReloadOutlined, ExportOutlined, SettingOutlined } from '@ant-design/icons';
-import AdminLayout from '../../components/AdminLayout';
+import AdminLayout from '../../components/layouts/AdminLayout';
 import PageHeader from '../../components/admin/PageHeader';
 import KpiCards from '../../components/admin/KpiCards';
 import RevenueAnalytics from '../../components/admin/RevenueAnalytics';
@@ -14,11 +14,12 @@ import ConversionRate from '../../components/admin/ConversionRate';
 import TrafficSources from '../../components/admin/TrafficSources';
 import RecentOrders from '../../components/admin/RecentOrders/RecentOrders';
 import RecentActivity from '../../components/admin/RecentActivity';
-import { useAuth } from '../../lib/auth-context';
+import { useAuth } from '../../lib/contexts/auth-context';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LoadingSpinner } from '../../shared';
+import { Product } from '../../types';
 
 export default function AdminDashboard() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -69,11 +70,11 @@ export default function AdminDashboard() {
 
   // Calcul des métriques réelles basées sur les produits
   const totalProducts = products?.length || 0;
-  const totalValue = products?.reduce((sum: number, product: any) => sum + (product.price || 0), 0) || 0;
+  const totalValue = products?.reduce((sum: number, product: Product) => sum + (product.price || 0), 0) || 0;
   const averagePrice = totalProducts > 0 ? totalValue / totalProducts : 0;
   
   // Calcul des prix min/max pour plus d'informations
-  const prices = products?.map((product: any) => product.price || 0) || [];
+  const prices = products?.map((product: Product) => product.price || 0) || [];
   const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
   const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
   

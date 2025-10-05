@@ -1,10 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Menu, Button, Card, Typography, Space, Divider } from 'antd';
+import { Menu, Button, Typography } from 'antd';
 import { 
   DashboardOutlined,
-  ShoppingCartOutlined,
   ShopOutlined,
   UserOutlined,
   BarChartOutlined,
@@ -12,19 +11,14 @@ import {
   LinkOutlined,
   QuestionCircleOutlined,
   SettingOutlined,
-  CheckCircleOutlined,
   CrownOutlined
 } from '@ant-design/icons';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '../../lib/auth-context';
 import { AdminSidebarProps } from '../../types';
 import type { MenuProps } from 'antd';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export default function Sidebar({ collapsed, pathname, onMenuClick }: AdminSidebarProps) {
-  const { user } = useAuth();
-  const router = useRouter();
 
   const menuItems: MenuProps['items'] = [
     {

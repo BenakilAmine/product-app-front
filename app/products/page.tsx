@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '../../lib/auth-context';
-import AmazonLayout from '../../components/MarketLayout';
+import Layout from '../../components/layouts/MarketLayout';
 import ProductFilters from '../../components/products/ProductFilters';
 import ProductGrid from '../../components/products/ProductGrid';
 import { useProductFilters } from '../../hooks/useProductFilters';
@@ -10,7 +9,6 @@ import { useProductFilters } from '../../hooks/useProductFilters';
 import { LoadingState } from '../../shared';
 
 export default function ProductsPage() {
-  const { isAuthenticated, loading: authLoading } = useAuth();
   const {
     products,
     loading,
@@ -32,7 +30,7 @@ export default function ProductsPage() {
   }
 
   return (
-    <AmazonLayout 
+    <Layout 
       searchValue={search}
       onSearchChange={onSearchChange}
     >
@@ -58,7 +56,7 @@ export default function ProductsPage() {
           />
         </div>
       </div>
-    </AmazonLayout>
+    </Layout>
   );
 }
 

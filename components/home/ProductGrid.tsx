@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button, Typography, Space, Card, Row, Col, Skeleton } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
-// import { ProductGridProps } from '../../types'; // Supprimé car non utilisé
+import { Product } from '../../types';
 import { formatters, colors } from '../../shared';
 
 const { Title, Text } = Typography;
 
-export default function ProductGrid({ products, loading }: { products: any[]; loading: boolean }) {
+export default function ProductGrid({ products }: { products: Product[]; loading: boolean }) {
   const router = useRouter();
 
   return (
@@ -24,7 +24,7 @@ export default function ProductGrid({ products, loading }: { products: any[]; lo
         </Space>
 
         <Row gutter={[16, 16]}>
-          {products.map((p: any, idx: number) => (
+          {products.map((p: Product, idx: number) => (
             <Col xs={24} sm={12} md={8} lg={6} key={p ? p.id : idx}>
               <Card 
                 hoverable 
@@ -103,7 +103,7 @@ export default function ProductGrid({ products, loading }: { products: any[]; lo
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div>
                               <Text style={{ 
-                                color: colors.amazon.red, 
+                                color: colors.customColors.red, 
                                 fontWeight: 'bold', 
                                 fontSize: 18,
                                 lineHeight: 1
@@ -132,8 +132,8 @@ export default function ProductGrid({ products, loading }: { products: any[]; lo
                         style={{ 
                           width: '100%', 
                           height: 40,
-                          background: colors.amazon.orange, 
-                          borderColor: colors.amazon.orange,
+                          background: colors.customColors.orange, 
+                          borderColor: colors.customColors.orange,
                           borderRadius: 8,
                           fontWeight: 500,
                           fontSize: 14
@@ -143,12 +143,12 @@ export default function ProductGrid({ products, loading }: { products: any[]; lo
                           // TODO: Implémenter l'ajout au panier
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = colors.amazon.darkOrange;
-                          e.currentTarget.style.borderColor = colors.amazon.darkOrange;
+                          e.currentTarget.style.background = colors.customColors.darkOrange;
+                          e.currentTarget.style.borderColor = colors.customColors.darkOrange;
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.background = colors.amazon.orange;
-                          e.currentTarget.style.borderColor = colors.amazon.orange;
+                          e.currentTarget.style.background = colors.customColors.orange;
+                          e.currentTarget.style.borderColor = colors.customColors.orange;
                         }}
                       >
                         Ajouter au panier

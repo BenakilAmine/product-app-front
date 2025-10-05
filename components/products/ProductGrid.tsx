@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, Row, Col, Button, Typography, Empty, Skeleton, Pagination } from 'antd';
+import { Card, Row, Col, Button, Typography, Skeleton, Pagination } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
-import { Product } from '../../types';
+import { ProductPreview, ProductGridPageProps } from '../../types';
 import { formatters, colors, EmptyState } from '../../shared';
 
 const { Text } = Typography;
@@ -55,7 +55,7 @@ export default function ProductGrid({
   return (
     <>
       <Row gutter={[16, 16]}>
-        {products.map((p: any) => (
+        {products.map((p: ProductPreview) => (
           <Col xs={24} sm={12} md={8} lg={6} key={p.id}>
             <Card 
               hoverable 
@@ -124,7 +124,7 @@ export default function ProductGrid({
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                   <div>
                         <Text style={{ 
-                          color: colors.amazon.red, 
+                          color: colors.customColors.red, 
                           fontWeight: 'bold', 
                           fontSize: 18,
                           lineHeight: 1
@@ -153,8 +153,8 @@ export default function ProductGrid({
                   style={{ 
                     width: '100%', 
                     height: 40,
-                    background: colors.amazon.orange, 
-                    borderColor: colors.amazon.orange,
+                    background: colors.customColors.orange, 
+                    borderColor: colors.customColors.orange,
                     borderRadius: 8,
                     fontWeight: 500,
                     fontSize: 14
@@ -164,12 +164,12 @@ export default function ProductGrid({
                     // TODO: Implémenter l'ajout au panier
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = colors.amazon.darkOrange;
-                    e.currentTarget.style.borderColor = colors.amazon.darkOrange;
+                    e.currentTarget.style.background = colors.customColors.darkOrange;
+                    e.currentTarget.style.borderColor = colors.customColors.darkOrange;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = colors.amazon.orange;
-                    e.currentTarget.style.borderColor = colors.amazon.orange;
+                    e.currentTarget.style.background = colors.customColors.orange;
+                    e.currentTarget.style.borderColor = colors.customColors.orange;
                   }}
                 >
                   Ajouter au panier

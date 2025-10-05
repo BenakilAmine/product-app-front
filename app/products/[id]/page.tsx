@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
-import { Product, ProductPageResponse } from '../../../types/product';
+import { ProductPageResponse } from '../../../types/product';
 import { 
   Card, 
   Typography, 
   Space, 
-  Tag, 
   Button, 
   Spin, 
   Result, 
@@ -28,13 +27,10 @@ import {
   HeartOutlined, 
   ShareAltOutlined, 
   ShoppingCartOutlined,
-  StarOutlined,
   UserOutlined,
-  CalendarOutlined,
-  DollarOutlined
 } from '@ant-design/icons';
-import { useAuth } from '../../../lib/auth-context';
-import AmazonLayout from '../../../components/MarketLayout';
+import { useAuth } from '../../../lib/contexts/auth-context';
+import Layout from '../../../components/layouts/MarketLayout';
 
 const { Title, Text } = Typography;
 
@@ -93,17 +89,17 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <AmazonLayout>
+      <Layout>
         <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Spin size="large" />
         </div>
-      </AmazonLayout>
+      </Layout>
     );
   }
 
   if (error) {
     return (
-      <AmazonLayout>
+      <Layout>
         <div style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
           <Result
             status="error"
@@ -112,7 +108,7 @@ export default function ProductDetailPage() {
             extra={<Link href="/products"><Button icon={<ArrowLeftOutlined />}>Retour aux produits</Button></Link>}
           />
         </div>
-      </AmazonLayout>
+      </Layout>
     );
   }
 
@@ -120,7 +116,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <AmazonLayout>
+      <Layout>
         <div style={{ padding: 24, maxWidth: 1200, margin: '0 auto' }}>
           <Result
             status="404"
@@ -128,7 +124,7 @@ export default function ProductDetailPage() {
             extra={<Link href="/products"><Button icon={<ArrowLeftOutlined />}>Retour aux produits</Button></Link>}
           />
         </div>
-      </AmazonLayout>
+      </Layout>
     );
   }
 
@@ -136,7 +132,7 @@ export default function ProductDetailPage() {
   const isOwner = isAuthenticated && user?.id === product.user.id;
 
   return (
-    <AmazonLayout>
+    <Layout>
       <div style={{ padding: '24px 16px', maxWidth: 1200, margin: '0 auto' }}>
         {/* Navigation */}
         <div style={{ marginBottom: 24 }}>
@@ -366,7 +362,7 @@ export default function ProductDetailPage() {
           </Col>
         </Row>
       </div>
-    </AmazonLayout>
+    </Layout>
   );
 }
 

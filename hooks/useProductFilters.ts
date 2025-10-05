@@ -1,62 +1,72 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useQuery } from '@apollo/client/react';
-import { gql } from '@apollo/client';
-import { Product } from '../types';
-import { useApiWithToast } from '../shared/hooks/useApiWithToast';
+import { productsService } from '../lib/services';
+import type { Product } from '../types';
 
-const GET_PRODUCTS = gql`
-  query GetProducts {
-    products {
-      id
-      name
-      price
-    }
-  }
-`;
+/**
+ * Hook pour gérer les filtres, tri et pagination des produits
+ * Utilise ProductsService pour charger les données
+ */
+
+type ProductSort = 'recent' | 'price_asc' | 'price_desc';
 
 export function useProductFilters() {
-  const { useQueryApi } = useApiWithToast();
-  const { data, loading } = useQueryApi(GET_PRODUCTS, {
-    fetchPolicy: 'cache-first',
-    showErrorMessage: true,
-    errorMessage: 'Erreur lors du chargement des produits'
-  });
-
-  const products = (data as GetProductsResponse)?.products || [];
-
-  // Filtres / tri / pagination
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sort, setSort] = useState<ProductSort>('recent');
   const [page, setPage] = useState(1);
   const pageSize = 12;
 
+  // Charger les produits
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true);
+        const data = await productsService.getAllProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error('Erreur chargement produits:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProducts();
+  }, []);
+
+  // Prix maximum des produits
   const maxPrice = useMemo(() => {
-    return products.reduce((m: number, p: Product) => Math.max(m, p.price), 0) || 1000;
+    return products.reduce((m, p) => Math.max(m, p.price), 0) || 1000;
   }, [products]);
 
+  // Ajuster le slider selon les données
   useEffect(() => {
-    // Ajuster la borne haute du slider selon les données
     setPriceRange(([min]) => [min, Math.max(maxPrice, 100)]);
   }, [maxPrice]);
 
+  // Filtrer et trier les produits
   const filtered = useMemo(() => {
     const searchLower = search.trim().toLowerCase();
-    let list = products.filter((p: Product) =>
-      p.name.toLowerCase().includes(searchLower) && p.price >= priceRange[0] && p.price <= priceRange[1]
+    let list = products.filter((p) =>
+      p.name.toLowerCase().includes(searchLower) && 
+      p.price >= priceRange[0] && 
+      p.price <= priceRange[1]
     );
+    
     if (sort === 'price_asc') list = [...list].sort((a, b) => a.price - b.price);
     if (sort === 'price_desc') list = [...list].sort((a, b) => b.price - a.price);
-    // 'recent' suppose l'ordre par défaut renvoyé par l'API (déjà desc par date)
+    
     return list;
   }, [products, search, priceRange, sort]);
 
+  // Pagination
   const total = filtered.length;
   const paginated = useMemo(() => {
     const start = (page - 1) * pageSize;
     return filtered.slice(start, start + pageSize);
   }, [filtered, page]);
 
+  // Handlers
   const handleSearchChange = (value: string) => {
     setPage(1);
     setSearch(value);

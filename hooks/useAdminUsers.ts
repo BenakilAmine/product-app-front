@@ -1,74 +1,73 @@
-import { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client/react';
-import { gql } from '@apollo/client';
-import { UserItem, UsersResponse, UsersQueryVars, UsersMetricsResponse } from '../types/admin';
+import { useState, useEffect } from 'react';
+import { adminService, type User } from '../lib/services';
 import { useToastNotifications } from './useToastNotifications';
 
-const USERS_QUERY = gql`
-  query Users($page: Int, $pageSize: Int, $search: String) {
-    users(page: $page, pageSize: $pageSize, search: $search) {
-      items {
-        id
-        email
-        role
-        createdAt
-        updatedAt
-      }
-      total
-      page
-      pageSize
-    }
-  }
-`;
+/**
+ * Hook pour gérer les utilisateurs dans l'admin
+ * Utilise AdminService pour toute la logique métier
+ */
 
-const SET_USER_ROLE_MUTATION = gql`
-  mutation SetUserRole($userId: ID!, $role: Role!) {
-    setUserRole(userId: $userId, role: $role) {
-      id
-      email
-      role
-    }
-  }
-`;
-
-const DELETE_USER_MUTATION = gql`
-  mutation DeleteUser($id: ID!) {
-    deleteUser(id: $id)
-  }
-`;
-
-const METRICS_QUERY = gql`
-  query Metrics {
-    metrics {
-      totalUsers
-      adminsCount
-    }
-  }
-`;
+interface UserItem {
+  id: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export function useAdminUsers() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [metrics, setMetrics] = useState<any>(null);
+  const [usersLoading, setUsersLoading] = useState(true);
+  const [metricsLoading, setMetricsLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserItem | null>(null);
   
-  const { success, notifyApiError } = useToastNotifications();
+  const { success, error } = useToastNotifications();
 
-  // Queries
-  const { data: usersData, loading: usersLoading, refetch: refetchUsers } = useQuery<UsersResponse, UsersQueryVars>(USERS_QUERY, {
-    variables: {
-      page: currentPage,
-      pageSize: pageSize,
-      search: searchText || undefined
+  // Charger les utilisateurs
+  const loadUsers = async () => {
+    try {
+      setUsersLoading(true);
+      const data = await adminService.getAllUsers();
+      setUsers(data);
+    } catch (err) {
+      console.error('Erreur chargement utilisateurs:', err);
+    } finally {
+      setUsersLoading(false);
     }
-  });
+  };
 
-  const { data: metricsData, loading: metricsLoading, refetch: refetchMetrics } = useQuery<UsersMetricsResponse>(METRICS_QUERY);
+  // Charger les métriques
+  const loadMetrics = async () => {
+    try {
+      setMetricsLoading(true);
+      const data = await adminService.getMetrics();
+      setMetrics(data);
+    } catch (err) {
+      console.error('Erreur chargement métriques:', err);
+    } finally {
+      setMetricsLoading(false);
+    }
+  };
 
-  // Mutations
-  const [setUserRole] = useMutation(SET_USER_ROLE_MUTATION);
-  const [deleteUser] = useMutation(DELETE_USER_MUTATION);
+  // Charger au démarrage
+  useEffect(() => {
+    loadUsers();
+    loadMetrics();
+  }, []);
+
+  // Filtrer par recherche
+  const filteredUsers = users.filter((user) =>
+    user.email.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  // Pagination
+  const start = (currentPage - 1) * pageSize;
+  const paginatedUsers = filteredUsers.slice(start, start + pageSize);
 
   // Handlers
   const handleSearch = (value: string) => {
@@ -85,35 +84,30 @@ export function useAdminUsers() {
     if (!selectedUser) return;
     
     try {
-      await setUserRole({
-        variables: {
-          userId: selectedUser.id.toString(),
-          role: role
-        }
-      });
+      await adminService.updateUserRole(selectedUser.id, role);
       success(`Utilisateur "${selectedUser.email}" mis à jour avec succès`);
       setEditModalVisible(false);
-      refetchUsers();
-    } catch (error: any) {
-      notifyApiError(error.message || 'Erreur lors de la mise à jour du rôle');
+      await loadUsers();
+    } catch (err) {
+      error('Erreur lors de la mise à jour du rôle');
+      console.error(err);
     }
   };
 
   const handleDeleteUser = async (userId: string) => {
     try {
-      await deleteUser({
-        variables: { id: userId }
-      });
-      success(`Utilisateur supprimé avec succès`);
-      refetchUsers();
-    } catch (error: any) {
-      notifyApiError(error.message || 'Erreur lors de la suppression de l\'utilisateur');
+      await adminService.deleteUser(userId);
+      success('Utilisateur supprimé avec succès');
+      await loadUsers();
+    } catch (err) {
+      error('Erreur lors de la suppression de l\'utilisateur');
+      console.error(err);
     }
   };
 
   const handlePageChange = (page: number, size?: number) => {
     setCurrentPage(page);
-    setPageSize(size || 10);
+    if (size) setPageSize(size);
   };
 
   const handleCloseModal = () => {
@@ -122,15 +116,15 @@ export function useAdminUsers() {
   };
 
   const refetchAll = () => {
-    refetchUsers();
-    refetchMetrics();
+    loadUsers();
+    loadMetrics();
   };
 
   return {
     // Data
-    users: usersData?.users?.items || [],
-    metrics: metricsData?.metrics,
-    totalUsers: usersData?.users?.total || 0,
+    users: paginatedUsers,
+    metrics,
+    totalUsers: filteredUsers.length,
     
     // Loading states
     usersLoading,
@@ -152,7 +146,7 @@ export function useAdminUsers() {
     handleDeleteUser,
     handlePageChange,
     handleCloseModal,
-    refetchUsers,
+    refetchUsers: loadUsers,
     refetchAll
   };
 }

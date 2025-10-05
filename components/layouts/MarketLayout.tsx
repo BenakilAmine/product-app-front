@@ -5,24 +5,24 @@ import Link from 'next/link';
 import { Layout, Row, Col, Input, Button, Space, Dropdown, Menu, Typography } from 'antd';
 import { ShoppingOutlined, SearchOutlined, UserOutlined, LogoutOutlined, CrownOutlined, AppstoreOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { useAuth } from '../lib/auth-context';
+import { useAuth } from '../../lib/contexts/auth-context';
 import { useRouter } from 'next/navigation';
 
 const { Header, Content, Footer } = Layout;
 
-interface AmazonLayoutProps {
+interface LayoutProps {
   children: React.ReactNode;
   showSearch?: boolean;
   searchValue?: string;
   onSearchChange?: (value: string) => void;
 }
 
-export default function AmazonLayout({ 
+export default function MyLayout({ 
   children, 
   showSearch = true, 
   searchValue = '', 
   onSearchChange 
-}: AmazonLayoutProps) {
+}: LayoutProps) {
   const { isAuthenticated, user, logout, loading } = useAuth();
   const router = useRouter();
 
@@ -43,7 +43,7 @@ export default function AmazonLayout({
 
   return (
     <Layout style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-      {/* Header Amazon-style */}
+      {/* Header My-style */}
       <Header style={{
         background: '#131921',
         color: 'white',
@@ -118,7 +118,7 @@ export default function AmazonLayout({
         </div>
       </Header>
 
-      {/* Navigation Amazon-style */}
+      {/* Navigation My-style */}
       <div style={{
         background: '#232f3e',
         color: 'white',
@@ -145,7 +145,7 @@ export default function AmazonLayout({
         {children}
       </Content>
 
-      {/* Footer Amazon-style */}
+      {/* Footer My-style */}
       <Footer style={{
         background: '#131921',
         color: 'white',

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Form, Input, Button, Card, Typography, Space, Divider, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined, UserAddOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { useAuth } from '../../lib/auth-context';
-import AmazonLayout from '../../components/MarketLayout';
+import { useAuth } from '../../lib/contexts/auth-context';
+import Layout from '../../components/layouts/MarketLayout';
 import { LoadingState } from '../../shared';
 
 const { Title, Text } = Typography;
@@ -43,7 +43,7 @@ export default function SignupPage() {
   }
 
   return (
-    <AmazonLayout>
+    <Layout>
       <div style={{ 
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         minHeight: 'calc(100vh - 300px)',
@@ -295,6 +295,6 @@ export default function SignupPage() {
           </Row>
         </div>
       </div>
-    </AmazonLayout>
+    </Layout>
   );
 }

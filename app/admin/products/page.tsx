@@ -12,9 +12,9 @@ import {
   ExportOutlined
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../../lib/auth-context';
+import { useAuth } from '../../../lib/contexts/auth-context';
 import { useState, useEffect } from 'react';
-import AdminLayout from '../../../components/AdminLayout';
+import AdminLayout from '../../../components/layouts/AdminLayout';
 import PageHeader from '../../../components/admin/PageHeader';
 import FilterPanel from '../../../components/admin/FilterPanel';
 import { EmptyState, LoadingSpinner } from '../../../shared';
@@ -68,19 +68,11 @@ export default function AdminProducts() {
     metrics, 
     productsLoading, 
     metricsLoading,
-    productsError, 
-    metricsError, 
     deleteProduct, 
     refetchProducts,
     refetchMetrics,
     refetchAll
   } = useAdminProducts(!user || user.role !== 'SUPER_ADMIN');
-
-  // Gestion des erreurs
-  useEffect(() => {
-    if (productsError) setError(productsError.message);
-    if (metricsError) setError(metricsError.message);
-  }, [productsError, metricsError]);
 
   const handleFilterChange = (newFilters: ProductFilters) => {
     setFilters(newFilters);
@@ -94,9 +86,7 @@ export default function AdminProducts() {
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await deleteProduct({ variables: { id: productId } });
-      message.success('Produit supprimé avec succès');
-      refetchProducts();
+      await deleteProduct(productId);
       // Recharger les métriques car le nombre total de produits a changé
       refetchMetrics();
       setDeleteModalVisible(false);
@@ -149,13 +139,13 @@ export default function AdminProducts() {
   const averagePrice = products.length > 0 ? totalValue / products.length : 0;
 
   // États d'erreur
-  if (productsError || metricsError || error) {
+  if (error) {
     return (
       <AdminLayout>
         <div style={{ padding: 24, maxWidth: 1400, margin: '0 auto' }}>
           <ErrorState
             title="Erreur de chargement"
-            description={error || productsError?.message || metricsError?.message || 'Impossible de charger les données'}
+            description={error || 'Impossible de charger les données'}
             actions={[
               { label: 'Réessayer', onClick: () => { setError(null); refetchAll(); }, type: 'primary' },
               { label: 'Retour au dashboard', onClick: () => router.push('/admin'), type: 'default' }

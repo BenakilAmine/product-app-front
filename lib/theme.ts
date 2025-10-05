@@ -1,8 +1,8 @@
 import type { ThemeConfig } from 'antd';
 
-export const amazonTheme: ThemeConfig = {
+export const MyTheme: ThemeConfig = {
   token: {
-    // Couleurs principales Amazon
+    // Couleurs principales
     colorPrimary: '#ff9900',
     colorSuccess: '#00a650',
     colorWarning: '#ff9900',

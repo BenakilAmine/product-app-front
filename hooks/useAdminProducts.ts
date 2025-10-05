@@ -1,48 +1,75 @@
-import { useQuery, useMutation } from '@apollo/client/react';
-import { gql } from '@apollo/client';
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
+import { adminService, productsService } from '../lib/services';
+import { useToastNotifications } from './useToastNotifications';
+import type { Product } from '../types';
 
-const PRODUCTS_QUERY = gql`
-  query AdminProducts {
-    adminProducts {
-      id
-      name
-      price
-      createdAt
-      updatedAt
-      user {
-        id
-        email
-      }
+/**
+ * Hook pour gérer les produits dans l'admin
+ * Utilise ProductsService et AdminService
+ */
+
+export function useAdminProducts(skip: boolean = false) {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [metrics, setMetrics] = useState<any>(null);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [metricsLoading, setMetricsLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
+  const { success, error } = useToastNotifications();
+
+  // Charger les produits
+  const loadProducts = async () => {
+    if (skip) return;
+    try {
+      setProductsLoading(true);
+      const data = await adminService.getAllProducts();
+      setProducts(data);
+    } catch (err) {
+      console.error('Erreur chargement produits:', err);
+    } finally {
+      setProductsLoading(false);
     }
-  }
-`;
+  };
 
-const METRICS_QUERY = gql`
-  query Metrics {
-    metrics {
-      totalProducts
-      productsLast7d
+  // Charger les métriques
+  const loadMetrics = async () => {
+    if (skip) return;
+    try {
+      setMetricsLoading(true);
+      const data = await adminService.getMetrics();
+      setMetrics(data);
+    } catch (err) {
+      console.error('Erreur chargement métriques:', err);
+    } finally {
+      setMetricsLoading(false);
     }
-  }
-`;
+  };
 
-const DELETE_PRODUCT_MUTATION = gql`
-  mutation DeleteProduct($id: ID!) {
-    deleteProduct(id: $id)
-  }
-`;
+  // Charger au démarrage
+  useEffect(() => {
+    if (!skip) {
+      loadProducts();
+      loadMetrics();
+    }
+  }, [skip]);
 
-export function useAdminProducts(skip: boolean) {
-  const { data: productsData, loading: productsLoading, error: productsError, refetch: refetchProducts } = useQuery(PRODUCTS_QUERY, { skip });
-  const { data: metricsData, loading: metricsLoading, error: metricsError, refetch: refetchMetrics } = useQuery(METRICS_QUERY, { skip });
-  const [deleteProduct, { loading: deleting }] = useMutation(DELETE_PRODUCT_MUTATION);
+  // Supprimer un produit
+  const deleteProduct = async (id: string) => {
+    try {
+      setDeleting(true);
+      await productsService.deleteProduct(id);
+      success('Produit supprimé avec succès');
+      await loadProducts(); // Recharger la liste
+    } catch (err) {
+      error('Erreur lors de la suppression');
+      console.error(err);
+    } finally {
+      setDeleting(false);
+    }
+  };
 
-  const products = useMemo(() => productsData?.adminProducts ?? [], [productsData]);
-  const metrics = metricsData?.metrics;
-
+  // Recharger tout
   const refetchAll = async () => {
-    await Promise.all([refetchProducts(), refetchMetrics()]);
+    await Promise.all([loadProducts(), loadMetrics()]);
   };
 
   return {
@@ -50,12 +77,10 @@ export function useAdminProducts(skip: boolean) {
     metrics,
     productsLoading,
     metricsLoading,
-    productsError,
-    metricsError,
-    deleteProduct,
     deleting,
-    refetchProducts,
-    refetchMetrics,
+    deleteProduct,
+    refetchProducts: loadProducts,
+    refetchMetrics: loadMetrics,
     refetchAll,
   };
 }

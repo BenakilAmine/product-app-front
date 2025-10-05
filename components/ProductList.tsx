@@ -4,7 +4,7 @@ import React from 'react';
 import { Button, Space, Card, Typography, Input, Empty } from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 // // import Link from 'next/link'; // Supprimé car non utilisé // Supprimé car non utilisé
-import { useAuth } from '../lib/auth-context';
+import { useAuth } from '../lib/contexts/auth-context';
 import ProductStats from './products/ProductStats';
 import ProductTable from './products/ProductTable';
 import { useProductList } from '../hooks/useProductList';

@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '../lib/auth-context';
-import Layout from '../components/MarketLayout';
+import { useAuth } from '../lib/contexts/auth-context';
+import Layout from '../components/layouts/MarketLayout';
 import HeroSection from '../components/home/HeroSection';
 import ProductGrid from '../components/home/ProductGrid';
 import { useProductsPreview } from '../hooks/useProductsPreview';

@@ -1,32 +1,35 @@
-import { useQuery } from '@apollo/client/react';
-import { gql } from '@apollo/client';
-// import { GetProductsResponse } from '../types'; // Supprimé car non utilisé
-import { useApiWithToast } from '../shared/hooks/useApiWithToast';
+import { useState, useEffect } from 'react';
+import { productsService } from '../lib/services';
+import type { Product } from '../types';
 
-const GET_PRODUCTS_PREVIEW = gql`
-  query GetProductsPreview {
-    products {
-      id
-      name
-      price
-    }
-  }
-`;
+/**
+ * Hook pour afficher un aperçu des produits (page d'accueil)
+ * Utilise ProductsService pour charger un nombre limité de produits
+ */
 
-export function useProductsPreview() {
-  const { useQueryApi } = useApiWithToast();
-  const { data, loading } = useQueryApi(GET_PRODUCTS_PREVIEW, {
-    fetchPolicy: 'network-only',
-    nextFetchPolicy: 'no-cache',
-    notifyOnNetworkStatusChange: true,
-    showErrorMessage: true,
-    errorMessage: 'Erreur lors du chargement des produits'
-  });
+export function useProductsPreview(limit: number = 12) {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const preview = (((data as any)?.products) || []).slice(0, 12);
+  useEffect(() => {
+    const loadPreview = async () => {
+      try {
+        setLoading(true);
+        const data = await productsService.getProductsPreview(limit);
+        setProducts(data);
+      } catch (error) {
+        console.error('Erreur chargement aperçu:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPreview();
+  }, [limit]);
+
+  // Afficher des placeholders pendant le chargement
   const previewList = loading
     ? Array.from({ length: 8 }).map(() => null)
-    : preview;
+    : products;
 
   return {
     products: previewList,

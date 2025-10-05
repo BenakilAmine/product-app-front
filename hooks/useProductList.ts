@@ -1,84 +1,71 @@
-import { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client/react';
-import { gql } from '@apollo/client';
-import { message } from 'antd';
-import { 
-  Product, 
-  // GetProductsResponse, // Supprimé car non utilisé 
-  // DeleteProductResponse, // Supprimé car non utilisé
-  // ProductStats // Supprimé car non utilisé 
-} from '../types';
-import { useApiWithToast } from '../shared/hooks/useApiWithToast';
+import { useState, useEffect } from 'react';
+import { productsService } from '../lib/services';
+import { useToastNotifications } from './useToastNotifications';
+import type { Product } from '../types';
 
-// Query pour récupérer tous les produits
-const GET_PRODUCTS = gql`
-  query GetProducts {
-    products {
-      id
-      name
-      price
-      createdAt
-      updatedAt
-      user {
-        id
-        email
-      }
-    }
-  }
-`;
+/**
+ * Hook pour gérer la liste des produits avec recherche et suppression
+ * Utilise ProductsService pour toute la logique métier
+ */
 
-// Mutation pour supprimer un produit
-const DELETE_PRODUCT = gql`
-  mutation DeleteProduct($id: ID!) {
-    deleteProduct(id: $id)
-  }
-`;
+export interface ProductStats {
+  totalProducts: number;
+  totalValue: number;
+  averagePrice: number;
+}
 
 export function useProductList() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
-  const { useQueryApi, useMutationApi } = useApiWithToast();
+  const { success, error } = useToastNotifications();
 
-  // Query pour récupérer les produits
-  const { data, loading, error, refetch } = useQueryApi(GET_PRODUCTS, {
-    showErrorMessage: true,
-    errorMessage: 'Erreur lors du chargement des produits'
-  });
-  
-  const { execute: deleteProduct } = useMutationApi(DELETE_PRODUCT, {
-    successMessage: 'Produit supprimé avec succès',
-    errorMessage: 'Erreur lors de la suppression'
-  });
-
-  // Fonction pour supprimer un produit (variables au niveau racine + refetch)
-  const handleDelete = async (id: string) => {
-    await deleteProduct({ id });
-    await refetch();
+  // Charger les produits
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      const data = await productsService.getAllProducts();
+      setProducts(data);
+    } catch (err) {
+      error('Erreur lors du chargement des produits');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Filtrage des produits par nom
-  const filteredProducts = data?.products?.filter((product: Product) =>
+  // Charger au démarrage
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  // Supprimer un produit
+  const handleDelete = async (id: string) => {
+    try {
+      await productsService.deleteProduct(id);
+      success('Produit supprimé avec succès');
+      await loadProducts(); // Recharger la liste
+    } catch (err) {
+      error('Erreur lors de la suppression');
+      console.error(err);
+    }
+  };
+
+  // Filtrage par nom
+  const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchText.toLowerCase())
-  ) || [];
+  );
 
   // Calcul des statistiques
-  const totalProducts = filteredProducts.length;
-  const totalValue = filteredProducts.reduce((sum: number, product: Product) => sum + product.price, 0);
-  const averagePrice = totalProducts > 0 ? totalValue / totalProducts : 0;
-
-  const stats: ProductStats = {
-    totalProducts,
-    totalValue,
-    averagePrice
-  };
+  const stats: ProductStats = productsService.calculateStats(filteredProducts);
 
   return {
     products: filteredProducts,
     loading,
-    error,
-    refetch,
     searchText,
     setSearchText,
     handleDelete,
+    refetch: loadProducts,
     stats
   };
 }

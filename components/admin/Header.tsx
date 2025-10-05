@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Input, Button, Avatar, Badge, Space, Typography, Dropdown } from 'antd';
+import { Input, Button, Avatar, Badge, Typography, Dropdown } from 'antd';
 import { 
   SearchOutlined,
   MessageOutlined,
@@ -12,13 +12,13 @@ import {
   MenuOutlined
 } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../lib/auth-context';
+import { useAuth } from '../../lib/contexts/auth-context';
 import { AdminHeaderProps } from '../../types';
 
 const { Text } = Typography;
 
-export default function Header({ pathname, onMenuClick, onMobileMenuClick }: AdminHeaderProps) {
-  const { user, logout } = useAuth();
+export default function Header({ onMobileMenuClick }: AdminHeaderProps) {
+  const { logout } = useAuth();
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
 

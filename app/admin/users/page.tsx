@@ -2,7 +2,7 @@
 import { Card, Row, Col, Statistic } from 'antd';
 import { PlusOutlined, ReloadOutlined, UserOutlined, CrownOutlined, TeamOutlined, FilterOutlined, ExportOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import AdminLayout from '../../../components/AdminLayout';
+import AdminLayout from '../../../components/layouts/AdminLayout';
 import PageHeader from '../../../components/admin/PageHeader';
 import AdminUsersTable from '../../../components/admin/users/AdminUsersTable';
 import UserEditModal from '../../../components/admin/users/UserEditModal';

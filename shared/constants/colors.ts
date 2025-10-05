@@ -1,7 +1,7 @@
 // Palette de couleurs centralisée
 
 export const colors = {
-  // Couleurs principales Amazon
+  // Couleurs principales 
   primary: {
     50: '#fff7ed',
     100: '#ffedd5',
@@ -22,7 +22,7 @@ export const colors = {
     200: '#bbf7d0',
     300: '#86efac',
     400: '#4ade80',
-    500: '#00a650', // Vert Amazon
+    500: '#00a650', // Vert 
     600: '#16a34a',
     700: '#15803d',
     800: '#166534',
@@ -48,7 +48,7 @@ export const colors = {
     200: '#fecaca',
     300: '#fca5a5',
     400: '#f87171',
-    500: '#B12704', // Rouge Amazon
+    500: '#B12704', // Rouge 
     600: '#dc2626',
     700: '#b91c1c',
     800: '#991b1b',
@@ -61,7 +61,7 @@ export const colors = {
     200: '#bae6fd',
     300: '#7dd3fc',
     400: '#38bdf8',
-    500: '#007185', // Bleu Amazon
+    500: '#007185', // Bleu
     600: '#0284c7',
     700: '#0369a1',
     800: '#075985',
@@ -82,8 +82,8 @@ export const colors = {
     900: '#171717',
   },
 
-  // Couleurs spécifiques Amazon
-  amazon: {
+  // Couleurs spécifique
+  customColors: {
     orange: '#ff9900',
     darkOrange: '#e68900',
     red: '#B12704',
@@ -137,22 +137,22 @@ export const colors = {
 // Couleurs sémantiques pour l'accessibilité
 export const semanticColors = {
   text: {
-    primary: colors.amazon.text,
-    secondary: colors.amazon.textSecondary,
-    tertiary: colors.amazon.textTertiary,
+    primary: colors.customColors.text,
+    secondary: colors.customColors.textSecondary,
+    tertiary: colors.customColors.textTertiary,
     inverse: '#ffffff',
-    link: colors.amazon.blue,
-    linkHover: colors.amazon.darkBlue,
+    link: colors.customColors.blue,
+    linkHover: colors.customColors.darkBlue,
   },
   background: {
     primary: '#ffffff',
     secondary: colors.gray[50],
     tertiary: colors.gray[100],
-    inverse: colors.amazon.darkBlue,
+    inverse: colors.customColors.darkBlue,
   },
   border: {
-    primary: colors.amazon.border,
-    secondary: colors.amazon.borderSecondary,
+    primary: colors.customColors.border,
+    secondary: colors.customColors.borderSecondary,
     focus: colors.primary[500],
     error: colors.error[500],
     success: colors.success[500],

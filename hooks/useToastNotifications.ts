@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useToast } from '@/lib/toast-context';
+import { useToast } from '../lib/contexts/toast-context';
 import { messages } from '@/shared/constants/messages';
 
 // Types simples pour les notifications
@@ -100,20 +100,7 @@ export const useToastNotifications = () => {
     return showToast(message, 'info', { duration: 0 }); // Duration 0 = pas de fermeture automatique
   }, [showToast]);
 
-  // Notifications pour les opérations de fichier
-  const notifyFileUploaded = useCallback((fileName?: string) => {
-    const message = fileName 
-      ? `Fichier "${fileName}" téléversé avec succès`
-      : messages.success.uploaded;
-    success(message, { duration: 3000 });
-  }, [success]);
 
-  const notifyFileDownloaded = useCallback((fileName?: string) => {
-    const message = fileName 
-      ? `Fichier "${fileName}" téléchargé avec succès`
-      : messages.success.downloaded;
-    success(message, { duration: 3000 });
-  }, [success]);
 
   // Notifications pour les opérations de recherche
   const notifySearchResults = useCallback((count: number) => {
@@ -160,9 +147,6 @@ export const useToastNotifications = () => {
     // Notifications spéciales
     notifyUnsavedChanges,
 
-    // Notifications de fichiers
-    notifyFileUploaded,
-    notifyFileDownloaded,
 
     // Notifications de recherche et filtrage
     notifySearchResults,

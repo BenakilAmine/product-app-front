@@ -4,13 +4,13 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 // import AdminSidebar from './admin/AdminSidebar';
 // import ModernAdminSidebar from './admin/ModernAdminSidebar';
-import Sidebar from './admin/Sidebar';
+import Sidebar from '../admin/Sidebar';
 // import AdminHeader from './admin/AdminHeader';
 // import ModernAdminHeader from './admin/ModernAdminHeader';
-import Header from './admin/Header';
+import Header from '../admin/Header';
 // import AdminDesktopHeader from './admin/AdminDesktopHeader';
-import MobileDrawer from './admin/MobileDrawer';
-import { AdminLayoutProps } from '../types';
+import MobileDrawer from '../admin/MobileDrawer';
+import { AdminLayoutProps } from '../../types';
 
 const { Sider, Content } = Layout;
 

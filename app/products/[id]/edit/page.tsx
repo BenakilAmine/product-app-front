@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { Spin, Card, Result, Button } from 'antd';
 import { useQuery } from '@apollo/client/react';
 import { gql } from '@apollo/client';
-import { useAuth } from '../../../../lib/auth-context';
+import { useAuth } from '../lib/contexts/auth-context';
 import ProductForm from '../../../../components/ProductForm';
 
 // Query pour vérifier si le produit existe et appartient à l'utilisateur

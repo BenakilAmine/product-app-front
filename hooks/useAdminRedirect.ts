@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../lib/auth-context';
+import { useAuth } from '../lib/contexts/auth-context';
 
 /**
  * Hook pour gérer la redirection des utilisateurs non autorisés
