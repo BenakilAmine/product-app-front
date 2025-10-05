@@ -57,7 +57,7 @@ export default function MonthlyTarget() {
           </ResponsiveContainer>
           <div style={{
             position: 'absolute',
-            top: '50%',
+            top: '70%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             textAlign: 'center'
@@ -77,7 +77,7 @@ export default function MonthlyTarget() {
           Great Progress! 🎉
         </Text>
         <Text style={{ color: '#6b7280', fontSize: 12, display: 'block', lineHeight: 1.4 }}>
-          Our achievement increased by $200,000, let's reach 100% next month.
+          Our achievement increased by $200,000, lets reach 100% next month.
         </Text>
       </div>
 

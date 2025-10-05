@@ -53,15 +53,15 @@ export default function MyLayout({
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
           <Row align="middle" gutter={[16, 8]}>
-            <Col xs={24} sm={6} md={3}>
-              <Link href="/" style={{ color: 'white', textDecoration: 'none' }}>
-                <Space>
+            <Col xs={24} sm={6} md={5}>
+              <Link href="/" style={{ color: 'white', textDecoration: 'none',alignItems: 'baseline' }}>
+                <Space style={{ alignItems: 'baseline' }}>
                   <ShoppingOutlined style={{ fontSize: 24, color: '#ff9900' }} />
-                  <Typography.Title level={5} style={{ color: 'white', fontSize: 18 }}>ProductManager</Typography.Title>
+                  <Typography.Title level={5} style={{ color: 'white', fontSize: 18}}>ProductManager</Typography.Title>
                 </Space>
               </Link>
             </Col>
-            <Col xs={24} sm={12} md={12}>
+            <Col xs={24} sm={12} md={10}>
               {showSearch && (
                 <Input.Search
                   placeholder="Rechercher des produits..."
@@ -74,7 +74,7 @@ export default function MyLayout({
                 />
               )}
             </Col>
-            <Col xs={24} sm={6} md={9}>
+            <Col xs={24} sm={6} md={8}>
               <Space style={{ justifyContent: 'flex-end', width: '100%' }} wrap>
                 {loading ? (
                   <div style={{ 
@@ -124,7 +124,7 @@ export default function MyLayout({
         color: 'white',
         padding: '8px 0'
       }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
+        {/* <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
           <Menu
             mode="horizontal"
             style={{ background: 'transparent', border: 'none', color: 'white' }}
@@ -137,7 +137,7 @@ export default function MyLayout({
               { key: 'hygiene', label: 'Hygiène' },
             ]}
           />
-        </div>
+        </div> */}
       </div>
 
       {/* Contenu principal */}

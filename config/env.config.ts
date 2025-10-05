@@ -37,7 +37,7 @@ export const env: EnvConfig = {
   // URL de l'API GraphQL
   graphqlUrl: requireEnv(
     'NEXT_PUBLIC_GRAPHQL_URL',
-    'http://localhost:4000/graphql'
+    // 'http://localhost:4000/graphql'
   ),
   
   // Environnement Node.js

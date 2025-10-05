@@ -94,10 +94,11 @@ export const productsService = {
   getProductsPreview: async (limit: number = 12): Promise<Product[]> => {
     const { data } = await apolloClient.query({
       query: GET_PRODUCTS_PREVIEW_QUERY,
-      variables: { limit },
       fetchPolicy: 'network-only',
     });
-    return data?.productsPreview || [];
+    // Limiter le nombre de produits côté client
+    const products = data?.products || [];
+    return products.slice(0, limit);
   },
 
   /**

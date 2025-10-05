@@ -60,8 +60,8 @@ export const GET_PRODUCTS_PAGINATED_QUERY = gql`
 
 // Query pour récupérer un aperçu des produits (home page)
 export const GET_PRODUCTS_PREVIEW_QUERY = gql`
-  query GetProductsPreview($limit: Int) {
-    productsPreview(limit: $limit) {
+  query GetProductsPreview {
+    products {
       ...ProductFields
     }
   }

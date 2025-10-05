@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     // Désactiver temporairement les erreurs ESLint pour permettre le déploiement
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ['picsum.photos'],
+  },
 };
 
 export default nextConfig;
