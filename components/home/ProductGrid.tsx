@@ -28,10 +28,27 @@ export default function ProductGrid({ products, loading }: { products: Product[]
           {loading ? (
             Array.from({ length: 8 }).map((_, idx) => (
               <Col xs={24} sm={12} md={8} lg={6} key={idx}>
-                <Card style={{ borderRadius: 12 }}>
-                  <Skeleton.Image active style={{ width: '100%', height: 260 }} />
+                <Card 
+                  style={{ 
+                    borderRadius: 12,
+                    border: '1px solid #e7e7e7',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    overflow: 'hidden'
+                  }}
+                  styles={{ body: { padding: 0 } }}
+                  cover={
+                    <div style={{ height: 260, background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Skeleton.Image active style={{ width: '100%', height: 260 }} />
+                    </div>
+                  }
+                >
                   <div style={{ padding: 16 }}>
-                    <Skeleton active paragraph={{ rows: 3 }} />
+                    <Skeleton active paragraph={{ rows: 1 }} style={{ marginBottom: 12 }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                      <Skeleton.Button active size="small" style={{ width: 80 }} />
+                      <Skeleton.Button active size="small" style={{ width: 50 }} />
+                    </div>
+                    <Skeleton.Button active size="large" style={{ width: '100%', height: 40 }} />
                   </div>
                 </Card>
               </Col>

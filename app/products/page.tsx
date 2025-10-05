@@ -5,8 +5,6 @@ import Layout from '../../components/layouts/MarketLayout';
 import ProductFilters from '../../components/products/ProductFilters';
 import ProductGrid from '../../components/products/ProductGrid';
 import { useProductFilters } from '../../hooks/useProductFilters';
-// import { ProductGridPageProps } from '../../types'; // Supprimé car non utilisé
-import { LoadingState } from '../../shared';
 
 export default function ProductsPage() {
   const {
@@ -24,10 +22,6 @@ export default function ProductsPage() {
     onSortChange,
     onPageChange
   } = useProductFilters();
-
-  if (loading) {
-    return <LoadingState type="spinner" message="Chargement des produits..." />;
-  }
 
   return (
     <Layout 
